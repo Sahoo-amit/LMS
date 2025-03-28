@@ -16,6 +16,7 @@ import Video from "./components/Video";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 
 const App = () => {
   const { role } = AuthStore();
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path='/reset_password' element={<ResetPassword />}/>
           <Route path="/forgot_password" element={<ForgotPassword />} />
           <Route path="/courses/:id" element={<CourseDetails />} />
           <Route path="/not_found" element={<NotFound />} />

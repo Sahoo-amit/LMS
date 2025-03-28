@@ -44,13 +44,14 @@ const Login = () => {
       );
       if (res.ok) {
         const data = await res.json();
+        console.log(data)
         setIsLoading(false);
         storeToken(data.token, data.userExist.role, data.userExist._id);
-        toast.success(data.message);
+        toast.success("Login successful");
         navigate("/");
       } else {
         setIsLoading(false)
-        toast.error("Authentication failed.");
+        toast.error("Invalid credentials.");
       }
     } catch (error) {
       console.error(error);
@@ -81,6 +82,12 @@ const Login = () => {
             />
           </div>
           <div className="relative">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
             <input
               type={showPassword ? "text" : "password"}
               name="password"

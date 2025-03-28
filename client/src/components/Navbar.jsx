@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthStore } from "../store/AuthStore";
-import { ThemeStore } from "../store/ThemeStore";
-import { FiMenu, FiX } from "react-icons/fi";
+import { ThemeStore } from "../store/ThemeStore"
 import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 
 const Navbar = () => {
   const { isAuthenticated, role } = AuthStore();
-  const [isOpen, setIsOpen] = useState(false);
   const { theme, toggleTheme } = ThemeStore();
-  const navigate = useNavigate();
-  const [profileOpen, setProfileOpen] = useState(false); // State for profile dropdown
+  const [profileOpen, setProfileOpen] = useState(false)
 
   return (
     <nav className="w-full py-3 shadow-md fixed top-0 left-0 z-10 bg-white">
@@ -24,10 +21,7 @@ const Navbar = () => {
             E-Learning
           </Link>
         </h1>
-
-        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-7">
-          {/* Theme Toggle */}
           <button
             className="cursor-pointer text-xl rounded-full p-2 duration-200 hover:bg-gray-300"
             onClick={() => toggleTheme()}
@@ -66,8 +60,6 @@ const Navbar = () => {
             </Link>
           )}
         </div>
-
-        {/* Profile Icon for Mobile & Desktop */}
         <div className="relative md:hidden">
           <button
             className="text-2xl cursor-pointer focus:outline-none"
@@ -76,7 +68,6 @@ const Navbar = () => {
             <CgProfile />
           </button>
 
-          {/* Profile Dropdown */}
           {profileOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-md py-2">
               {isAuthenticated ? (

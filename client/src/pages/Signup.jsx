@@ -50,7 +50,7 @@ const Signup = () => {
       if (res.ok) {
         const data = await res.json();
         storeToken(data.token, data.user.role, data.user._id);
-        toast.success(data.message);
+        toast.success("Registration successful.");
         navigate("/");
       } else {
         toast.error("Authentication failed.");
@@ -101,6 +101,12 @@ const Signup = () => {
             />
           </div>
           <div className="relative">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
             <input
               type={showPassword ? "text" : "password"}
               name="password"
