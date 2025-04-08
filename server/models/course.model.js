@@ -2,14 +2,17 @@ import mongoose from 'mongoose'
 
 const courseSchema = new mongoose.Schema({
     title: {type: String, required: true},
-    price: {type: Number, required: true},
+    subtitle: {type: String},
+    courseLevel: {type: String, enum:["Beginner","Medium","Advance"]},
+    enrolledStudents: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+    price: {type: Number},
     rating: {type: Number, required: false},
-    category: {type: String, required: true},
-    description: {type: String, required: true},
-    image: {type: String, required: true},
-    video: {type: String, required: true},
-    videoPreview: {type: String, required: true},
-    teacher: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true}
-})
+    category: {type: String},
+    description: {type: String},
+    image: {type: String},
+    teacher: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    isPublished: {type: Boolean, default: false},
+    lectures: [{type: mongoose.Schema.Types.ObjectId, ref: "Lecture"}]
+},{timestamps: true})
 
 export const Course = mongoose.model('Course', courseSchema)

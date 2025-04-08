@@ -44,7 +44,6 @@ const Login = () => {
       );
       if (res.ok) {
         const data = await res.json();
-        console.log(data)
         setIsLoading(false);
         storeToken(data.token, data.userExist.role, data.userExist._id);
         toast.success("Login successful");

@@ -6,12 +6,11 @@ const userSchema = mongoose.Schema(
     username: { type: String, require: true },
     email: { type: String, require: true },
     password: { type: String, require: true },
-    verifyOTP: { type: String, default: "" },
-    verifyOTPExpire: { type: Number, default: 0 },
-    isVerified: { type: Boolean, default: false },
     resetOTP: { type: String, default: 0 },
     resetOTPExpire: { type: Number, default: 0 },
     role: { type: String, enum: ["student", "teacher"], default: "student" },
+    enrolledCourse : [{type: mongoose.Schema.Types.ObjectId, ref:"Course"}],
+    photoUrl : {type: String, default: ""}
   },
   { timestamps: true }
 );

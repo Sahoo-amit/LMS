@@ -1,8 +1,12 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
-import nodemailer from 'nodemailer'
-import jwt from 'jsonwebtoken'
-import crypto from 'crypto'
+import nodemailer from "nodemailer";
+import jwt from "jsonwebtoken";
+import crypto from "crypto";
+import {
+  deleteMediaFromCloudinary,
+  uploadMedia,
+} from "../config/cloudinary.js";
 
 export const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -13,7 +17,11 @@ export const register = async (req, res) => {
     }
     const salt = await bcrypt.genSalt(10);
     const hash_password = await bcrypt.hash(password, salt);
-    const user = await User.create({ username, email, password: hash_password });
+    const user = await User.create({
+      username,
+      email,
+      password: hash_password,
+    });
     res.status(200).json({ user, token: await user.generateToken() });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error", error });
@@ -27,16 +35,15 @@ export const login = async (req, res) => {
     if (!userExist) {
       return res.status(400).json({ message: "User not exists!" });
     }
-    const isMatched = await bcrypt.compare(password, userExist.password)
-    if(!isMatched){
-        return res.status(400).json("Invalid credentials.")
+    const isMatched = await bcrypt.compare(password, userExist.password);
+    if (!isMatched) {
+      return res.status(400).json("Invalid credentials.");
     }
     res.status(200).json({ userExist, token: await userExist.generateToken() });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error", error });
   }
 };
-
 
 export const forgot_password = async (req, res) => {
   try {
@@ -45,8 +52,8 @@ export const forgot_password = async (req, res) => {
     if (!user) {
       return res.status(400).json("User not found. Login first!");
     }
-    const otp = crypto.randomInt(100000, 999999)
-    const otpExpires = Date.now() + 10 * 60 * 1000
+    const otp = crypto.randomInt(100000, 999999);
+    const otpExpires = Date.now() + 10 * 60 * 1000;
     user.resetOTP = otp;
     user.resetOTPExpire = otpExpires;
     await user.save();
@@ -73,7 +80,6 @@ export const forgot_password = async (req, res) => {
     res.status(500).json("Internal Server Error");
   }
 };
-
 
 export const verifyOTP = async (req, res) => {
   try {
@@ -116,5 +122,51 @@ export const reset_password = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json("Internal Server Error");
+  }
+};
+
+export const getUserData = async(req, res)=>{
+  try {
+    const id = req.params.id
+    const user = await User.findById(id).select("-password")
+    if(!user){
+      return res.status(400).json("Not found")
+    }
+    res.status(200).json(user)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const updateProfile = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { username } = req.body;
+    const profilePic = req.file;
+    const user = await User.findById(id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    let profileUrl = user.photoUrl; // Default to existing image
+
+    if (profilePic) {
+      if (user.photoUrl) {
+        const publicId = user.photoUrl.split("/").pop().split(".")[0];
+        await deleteMediaFromCloudinary(publicId);
+      }
+      const cloudRes = await uploadMedia(profilePic.path);
+      profileUrl = cloudRes.secure_url;
+    }
+
+    const updateData = {};
+    if (username) updateData.username = username;
+    if (profileUrl) updateData.photoUrl = profileUrl;
+
+    const newData = await User.findByIdAndUpdate(id, updateData, {
+      new: true,
+    }).select("-password");
+    res.status(200).json(newData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

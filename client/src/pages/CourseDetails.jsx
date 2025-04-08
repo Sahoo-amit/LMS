@@ -1,117 +1,90 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { loadStripe } from "@stripe/stripe-js";
+import React, { useEffect, useState } from 'react'
+import {useParams} from 'react-router-dom'
+import {AuthStore} from '../store/AuthStore'
+import Payment from '../components/Payment'
 
 const CourseDetails = () => {
-  const { id } = useParams();
-  const [course, setCourse] = useState("");
-  const navigate = useNavigate();
+  const {id} = useParams()
+  const token = AuthStore((state)=>state.token)
+  const [course, setCourse] = useState("")
+  const [lectureId, setLectureId] = useState('')
 
-  const getCourseDetails = async () => {
+  const getLectures = async()=>{
     try {
-      const res = await fetch(
-        `http://localhost:3000/api/courses/get_course/${id}`
-      );
-      const data = await res.json();
-      setCourse(data.course);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const stripePromise = loadStripe(
-    "pk_test_51R7AfOQLP0VGAWlPObShRQ35FzY7te6UnXMMwRtmbDTkm5DosMCCF6ZWoHOYtgZ8RES9wlti9JPUDZxlYzABOvJR00RH7obhOO"
-  );
-
-  const makePayment = async (course) => {
-    try {
-      const res = await fetch(
-        `http://localhost:3000/api/payment/create-checkout-session`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            courseId: course._id,
-            courseName: course.title,
-            price: course.price,
-          }),
+      const res = await fetch(`http://localhost:3000/api/courses/lecture/${id}`,{
+        method:"GET",
+        headers:{
+          "Authorization": `Bearer ${token}`
         }
-      );
-      const session = await res.json();
-      if (!session.id) {
-        throw new Error("Failed to get Stripe session ID");
-      }
-
-      const stripe = await stripePromise;
-      const { error } = await stripe.redirectToCheckout({
-        sessionId: session.id,
       });
-
-      if (error) {
-        console.error("Stripe Checkout Error:", error);
-      }
+      const data = await res.json()
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
-  useEffect(() => {
-    getCourseDetails();
-  }, [id]);
+  const getCourseDetails = async()=>{
+    try {
+      const res = await fetch(`http://localhost:3000/api/courses/get_course/${id}`,{
+        method:"GET",
+        headers:{
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      const data = await res.json()
+      setCourse(data.course)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const isPurchased = false
+  useEffect(()=>{
+    getCourseDetails()
+  },[])
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg mt-10">
-      {/* Video Section */}
-      <div className="w-full flex justify-center mb-6">
-        <video
-          src={course.video}
-          controls
-          muted
-          className="w-full h-96 rounded-lg shadow-md"
-        />
-      </div>
-
-      {/* Course Info Section */}
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          {course.title}
-        </h1>
-        <p className="text-lg text-gray-600">Category: {course.category}</p>
-        <p className="text-xl font-semibold text-green-600">
-          Price: ${course.price}
+    <div className="mt-16 flex flex-col space-y-10 max-w-7xl mx-auto">
+      <div className="flex flex-col space-y-1 bg-gray-700 text-white p-6">
+        <h1 className="text-2xl">{course.title}</h1>
+        <p>{course.subtitle}</p>
+        <p>
+          Created by <span className="underline italic">Abcd efgh</span>
         </p>
-        <p className="text-yellow-500 text-lg">⭐ {course.rating} / 5</p>
-        <p className="text-gray-700 mt-4">{course.description}</p>
-
-        {/* Buttons */}
-        <div className="flex justify-between mt-6">
-          <button
-            className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition"
-            onClick={() => navigate(-1)}
-          >
-            Go Back
-          </button>
-          <button
-            className="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-800 transition font-bold"
-            onClick={() => makePayment(course)}
-          >
-            Buy Now
-          </button>
-        </div>
+        <p>Last updated on {new Date().toLocaleDateString()}</p>
+        <p>Sudents enrolled: {course.enrolledStudents?.length}</p>
       </div>
-
-      {/* Course Image Section */}
-      <div className="w-full flex justify-center mt-6">
-        <img
-          src={course.image}
-          alt={course.title}
-          className="w-full max-h-60 rounded-lg shadow-md object-cover"
-        />
+      <div className="flex justify-between">
+        <div className="w-full lg:w-1/2">
+          <h1>Description</h1>
+          <div dangerouslySetInnerHTML={{ __html: course.description }}></div>
+          <div className="border border-gray-400 shadow-md p-5 rounded-lg mt-6">
+            <h2 className="text-xl font-smeibold">Course Content</h2>
+            <span>Number of lectures: {course.lectures?.length}</span>
+          </div>
+        </div>
+        <div className="w-full lg:w-1/3 border border-gray-400">
+          <div className="p-5">
+            <div className="h-60">
+              <p>react player</p>
+            </div>
+            <p>lecture title</p>
+            <hr className="mt-2" />
+            <p className="mt-2">Course price</p>
+            <div className="flex justify-center w-full mt-2">
+              {isPurchased ? (
+                <button className="bg-gray-600 w-full hover:bg-gray-700 rounded-sm text-white cursor-pointer px-3 py-1">
+                  Continue Course
+                </button>
+              ) : (
+                <Payment id={id}/>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
-};
+}
 
-export default CourseDetails;
+export default CourseDetails

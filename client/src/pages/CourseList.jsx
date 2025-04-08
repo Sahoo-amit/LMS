@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CourseList = () => {
   const [courses, setCourses] = useState([]);
@@ -10,7 +10,7 @@ const CourseList = () => {
 
   const getCourses = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/courses/get_course", {
+      const res = await fetch("http://localhost:3000/api/courses/published_course", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -38,7 +38,7 @@ const CourseList = () => {
     const searchTerm = e.target.value;
     setSearch(searchTerm);
     const filtered = courses.filter((course) =>
-      course.category.toLowerCase().includes(searchTerm.toLowerCase())
+      course.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredCourses(filtered);
   };
@@ -79,7 +79,6 @@ const CourseList = () => {
                 title,
                 image,
                 price,
-                rating,
                 category,
                 description,
               } = item;
@@ -94,25 +93,18 @@ const CourseList = () => {
                     className="w-full h-40 object-cover"
                   />
                   <div className="p-4">
-                    <h2 className="text-lg font-semibold text-gray-900">
-                      {title}
-                    </h2>
+                    <Link to={`/courses/${_id}`}>
+                      <h2 className="text-lg font-semibold text-gray-900 hover:underline">
+                        {title}
+                      </h2>
+                    </Link>
                     <p className="text-sm text-gray-500 mb-2">
                       Category: {category}
                     </p>
                     <p className="text-gray-700 font-medium">
                       Price: <span className="text-green-600">${price}</span>
                     </p>
-                    <p className="text-yellow-500 text-sm">⭐ {rating}</p>
-                    <p className="text-sm text-gray-600 mt-2">
-                      {description.substring(0, 80)}...
-                    </p>
-                    <button
-                      className="text-red-500 cursor-pointer underline"
-                      onClick={() => navigate(`/courses/${_id}`)}
-                    >
-                      View details
-                    </button>
+                    <p className="text-sm text-gray-600 mt-2" dangerouslySetInnerHTML={{__html: description}}></p>
                   </div>
                 </div>
               );

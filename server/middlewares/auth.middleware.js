@@ -11,6 +11,7 @@ export const auth = async(req, res, next)=>{
           return res.status(409).json({ msg: `User not found` });
         }
         req.user = userData;
+        req.id = userData._id
         req.token = isVerified;
         next();
     } catch (error) {
