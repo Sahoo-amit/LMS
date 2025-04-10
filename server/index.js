@@ -5,6 +5,7 @@ import authRouter from './routes/auth.route.js'
 import courseRouter from './routes/course.route.js'
 import mediaRouter from './routes/media.route.js'
 import purchaseRouter from './routes/purchase.route.js'
+import progressRouter from './routes/progress.route.js'
 import cors from 'cors'
 
 config();
@@ -18,11 +19,11 @@ const corsOption = {
 app.use(cors(corsOption))
 app.use(express.json())
 
-app.use('/api/media',mediaRouter)
-app.use('/api/auth',authRouter)
+app.use('/api/media', mediaRouter)
+app.use('/api/auth', authRouter)
 app.use("/api/purchase", purchaseRouter)
-app.use('/api/courses',courseRouter)
-// app.use('/api/payment', paymentRouter)
+app.use('/api/courses', courseRouter)
+app.use('/api/progress', progressRouter)
 const PORT = process.env.PORT || 4000
 connectDB()
 app.listen(PORT, ()=>{

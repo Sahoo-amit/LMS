@@ -117,7 +117,7 @@ export const getPurchasedCourse = async(req,res)=>{
     const {courseId} = req.params
     const userId = req.id
     const course = await Course.findById(courseId).populate({path: "teacher"}).populate({path: "lectures"})
-    const purchasedCourse = await CoursePurchase.findOne({userId, courseId})
+    const purchasedCourse = await CoursePurchase.findOne({userId, courseId}).populate("status")
     if(!course){
       return res.status(404).json({message: "Course not found."})
     }
@@ -137,11 +137,41 @@ export const getAllPurchasedCourse = async (req, res) => {
       return res.status(404).json({ purchasedCourse: [] });
     }
 
-    // Filter to get unique courseId
     const seenCourses = new Set();
     const uniqueCourses = [];
 
     for (const purchase of purchasedCourses) {
+      const courseId = purchase.courseId._id.toString();
+      if (!seenCourses.has(courseId)) {
+        seenCourses.add(courseId);
+        uniqueCourses.push(purchase);
+      }
+    }
+
+    return res.status(200).json({ purchasedCourse: uniqueCourses });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const getAllPurchasedCourseByTeacher = async (req, res) => {
+  try {
+    const teacherId = req.id;
+    const purchasedCourses = await CoursePurchase.find({
+      status: "completed",
+    }).populate({
+      path: "courseId",
+      match: { teacher: teacherId },
+    });
+    const filteredCourses = purchasedCourses.filter((p) => p.courseId !== null);
+    if (filteredCourses.length === 0) {
+      return res.status(200).json({ purchasedCourse: [] })
+    }
+    const seenCourses = new Set();
+    const uniqueCourses = [];
+
+    for (const purchase of filteredCourses) {
       const courseId = purchase.courseId._id.toString();
       if (!seenCourses.has(courseId)) {
         seenCourses.add(courseId);

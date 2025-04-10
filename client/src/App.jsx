@@ -9,7 +9,6 @@ import CourseDetails from "./pages/CourseDetails";
 import NotFound from "./pages/NotFound";
 import AddCourse from "./components/AddCourse";
 import MyCourse from "./components/MyCourse";
-import Success from "./pages/Success";
 import MyEnrollments from "./pages/MyEnrollments";
 import Video from "./components/Video";
 import Signup from "./pages/Signup";
@@ -23,6 +22,7 @@ import EditCourse from "./components/EditCourse";
 import DashBoard from "./components/DashBoard";
 import Lectures from "./components/Lectures";
 import EditLecture from "./components/EditLecture";
+import CourseProgress from "./pages/CourseProgress";
 
 const App = () => {
   const { role } = AuthStore();
@@ -39,8 +39,14 @@ const App = () => {
                 <Route path="myUploads" element={<MyCourse />} />
                 <Route path="uploadLecture" element={<UploadLecture />} />
                 <Route path="editCourse/:id" element={<EditCourse />} m />
-                <Route path="editCourse/:id/addLecture" element={<Lectures />} />
-                <Route path="editCourse/:courseId/addLecture/:lectureId" element={<EditLecture />} />
+                <Route
+                  path="editCourse/:id/addLecture"
+                  element={<Lectures />}
+                />
+                <Route
+                  path="editCourse/:courseId/addLecture/:lectureId"
+                  element={<EditLecture />}
+                />
               </>
             )}
           </Route>
@@ -53,9 +59,9 @@ const App = () => {
           <Route path="/forgot_password" element={<ForgotPassword />} />
           <Route path="/courses/:id" element={<CourseDetails />} />
           <Route path="/not_found" element={<NotFound />} />
-          <Route path="/success" element={<Success />} />
           <Route path="/my_enrollment" element={<MyEnrollments />} />
           <Route path="/preview/:id" element={<Video />} />
+          <Route path="/course_progress/:id" element={<CourseProgress />} />
         </Routes>
       </BrowserRouter>
     </>

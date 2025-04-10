@@ -61,7 +61,7 @@ export const getCourses = async(req, res)=>{
 export const getSingleCourse = async(req, res)=>{
     try {
         const {id} = req.params
-        const course = await Course.findById(id)
+        const course = await Course.findById(id).populate("teacher","username").populate("lectures");
         if(!course){
             return res.status(404).json({message: "Course not found."})
         }

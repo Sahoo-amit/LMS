@@ -6,7 +6,7 @@ const DashBoard = () => {
   const [courses, setCourses] = useState([])
   const getAllCourses = async()=>{
     try {
-      const res = await fetch("http://localhost:3000/api/purchase/",{
+      const res = await fetch("http://localhost:3000/api/purchase/getCourse",{
         method:"GET",
         headers:{
           "Authorization": `Bearer ${token}`
@@ -38,7 +38,7 @@ const DashBoard = () => {
             </tr>
           </thead>
           <tbody className="text-gray-800 text-sm">
-            {courses.map((item, index) => (
+            {courses?.map((item, index) => (
               <tr key={index} className="hover:bg-gray-50">
                 <td className="px-6 py-4 border-b">{item.courseId.title}</td>
                 <td className="px-6 py-4 border-b">
