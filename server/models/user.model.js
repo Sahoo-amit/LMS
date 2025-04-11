@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema(
     password: { type: String, require: true },
     resetOTP: { type: String, default: 0 },
     resetOTPExpire: { type: Number, default: 0 },
-    role: { type: String, enum: ["student", "teacher"], default: "student" },
+    role: { type: String, enum: ["student", "teacher", "admin"], default: "student" },
     enrolledCourse : [{type: mongoose.Schema.Types.ObjectId, ref:"Course"}],
     photoUrl : {type: String, default: ""}
   },

@@ -36,8 +36,8 @@ export const createCheckoutSession = async(req,res)=>{
             },
           ],
           mode: "payment",
-          success_url: `${process.env.FRONTEND_URL}/course_progess/${courseId}`,
-          cancel_url: `${process.env.FRONTEND_URL}/course_details/${courseId}`,
+          success_url: `${process.env.FRONTEND_URL}/my_enrollment`,
+          cancel_url: `${process.env.FRONTEND_URL}/course_details`,
           metadata:{
             courseId: courseId.toString(),
             userId: userId.toString(),
@@ -131,7 +131,13 @@ export const getAllPurchasedCourse = async (req, res) => {
   try {
     const purchasedCourses = await CoursePurchase.find({
       status: "completed",
-    }).populate("courseId");
+    }).populate({
+      path: "courseId",
+      populate: {
+        path: "teacher",
+        select: "username email",
+      },
+    });
 
     if (!purchasedCourses || purchasedCourses.length === 0) {
       return res.status(404).json({ purchasedCourse: [] });
@@ -141,28 +147,32 @@ export const getAllPurchasedCourse = async (req, res) => {
     const uniqueCourses = [];
 
     for (const purchase of purchasedCourses) {
-      const courseId = purchase.courseId._id.toString();
+      const course = purchase.courseId;
+      if (!course) continue;
+
+      const courseId = course._id.toString();
       if (!seenCourses.has(courseId)) {
         seenCourses.add(courseId);
-        uniqueCourses.push(purchase);
+        uniqueCourses.push(course)
       }
     }
 
-    return res.status(200).json({ purchasedCourse: uniqueCourses });
+    return res.status(200).json({ purchasedCourses: uniqueCourses });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Server error" });
   }
 };
 
+
 export const getAllPurchasedCourseByTeacher = async (req, res) => {
   try {
-    const teacherId = req.id;
+    const id = req.id;
     const purchasedCourses = await CoursePurchase.find({
       status: "completed",
     }).populate({
       path: "courseId",
-      match: { teacher: teacherId },
+      match: { teacher: id },
     });
     const filteredCourses = purchasedCourses.filter((p) => p.courseId !== null);
     if (filteredCourses.length === 0) {
@@ -185,3 +195,35 @@ export const getAllPurchasedCourseByTeacher = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
+
+export const getPurchasedCourseByStudentId = async (req, res) => {
+  try {
+    const studentId = req.params.studentId || req.id;
+
+    const purchasedCourses = await CoursePurchase.find({
+      userId: studentId,
+      status: "completed",
+    }).populate("courseId")
+
+    if (!purchasedCourses || purchasedCourses.length === 0) {
+      return res.status(200).json({ purchasedCourse: [] });
+    }
+
+    const seenCourses = new Set();
+    const uniqueCourses = [];
+
+    for (const purchase of purchasedCourses) {
+      const courseId = purchase.courseId?._id?.toString();
+      if (courseId && !seenCourses.has(courseId)) {
+        seenCourses.add(courseId);
+        uniqueCourses.push(purchase);
+      }
+    }
+
+    return res.status(200).json({ purchasedCourse: uniqueCourses });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+

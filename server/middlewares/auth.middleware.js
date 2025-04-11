@@ -29,3 +29,14 @@ export const authTeacher = async (req, res, next) => {
     console.log(error);
   }
 };
+
+export const authAdmin = async(req, res, next)=>{
+  try {
+    if(req.user.role !== "admin"){
+      return res.status(409).json({msg: "Access denied."})
+    }
+    next()
+  } catch (error) {
+    console.log(error)
+  }
+}

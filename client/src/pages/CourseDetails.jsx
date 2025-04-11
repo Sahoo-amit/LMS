@@ -32,7 +32,7 @@ const CourseDetails = () => {
 
   const handleProgress = ()=>{
     if(isPurchased){
-        navigate(`/course_progress/${id}`);
+        navigate(`/course_progress/${id}`)
     }
   }
 

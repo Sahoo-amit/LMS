@@ -23,6 +23,9 @@ import DashBoard from "./components/DashBoard";
 import Lectures from "./components/Lectures";
 import EditLecture from "./components/EditLecture";
 import CourseProgress from "./pages/CourseProgress";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AllUser from "./pages/Admin/AllUser";
+import AdminLayout from "./pages/Admin/AdminLayout";
 
 const App = () => {
   const { role } = AuthStore();
@@ -31,7 +34,7 @@ const App = () => {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={role === "teacher" ? <Layout /> : <Home />}>
+          <Route path="/" element={ role === "teacher" ? ( <Layout /> ) : role === "admin" ? ( <AdminLayout /> ) : ( <Home /> )}>
             {role === "teacher" && (
               <>
                 <Route path="addCourse" element={<AddCourse />} />
@@ -47,6 +50,12 @@ const App = () => {
                   path="editCourse/:courseId/addLecture/:lectureId"
                   element={<EditLecture />}
                 />
+              </>
+            )}
+            {role === "admin" && (
+              <>
+                <Route path="admin_dashboard" element={<AdminDashboard />} />
+                <Route path="getuser" element={<AllUser />} />
               </>
             )}
           </Route>

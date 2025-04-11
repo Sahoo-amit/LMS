@@ -170,3 +170,40 @@ export const updateProfile = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const getAllUser = async (req, res) => {
+  try {
+    const users = await User.find({ role: { $ne: "admin" } })
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+export const updateRole = async(req, res)=>{
+  try {
+    const {id} = req.params
+    const {newRole} = req.body
+    const user = await User.findByIdAndUpdate(id, {role: newRole}, {new:true})
+    if(!user){
+      return res.status(404).json("User not found")
+    }
+    res.status(200).json({user, message:"User updated successfully."})
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const deleteUser = async(req,res)=>{
+  try {
+    const {id} = req.params
+    const user = await User.findByIdAndDelete(id)
+    if(!user) {
+      return res.status(404).json("User not found");
+    }
+    res.status(200).json({message: "User deleted successfully." });
+  } catch (error) {
+    console.log(error)
+  }
+}
