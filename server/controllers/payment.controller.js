@@ -3,6 +3,7 @@ import { Course } from "../models/course.model.js"
 import { CoursePurchase } from '../models/coursePurchase.model.js';
 import { Lecture } from '../models/lecture.model.js';
 import { User } from '../models/user.model.js';
+import fetch from 'node-fetch'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -10,6 +11,10 @@ export const createCheckoutSession = async(req,res)=>{
     try {
         const userId = req.id;
         const {courseId} = req.body
+        const ipResponse = await fetch("https://api.ipify.org?format=json");
+        const ipData = await ipResponse.json();
+        const userIP = ipData.ip;
+
         const course = await Course.findById(courseId)
         if(!course){
             return res.status(404).json({message: "Course not found."})
@@ -18,8 +23,9 @@ export const createCheckoutSession = async(req,res)=>{
           courseId,
           userId,
           status: "pending",
-          amount: course.price
-        });
+          amount: course.price,
+          purchaseIp: userIP
+        })
         const session = await stripe.checkout.sessions.create({
           payment_method_types: ["amazon_pay", "card"],
           line_items: [
@@ -83,7 +89,10 @@ export const stripeWebhook = async (req, res) => {
       }
 
       if (session.amount_total) {
-        purchase.amount = session.amount_total / 100;
+        purchase.amount = session.amount_total / 100
+      }
+      if (session.metadata?.userIP) {
+        purchase.purchaseIp = session.metadata.userIP
       }
       purchase.status = "completed";
       if (purchase.courseId && purchase.courseId.lectures.length > 0) {
@@ -162,7 +171,7 @@ export const getAllPurchasedCourse = async (req, res) => {
     console.log(error);
     return res.status(500).json({ message: "Server error" });
   }
-};
+}
 
 
 export const getAllPurchasedCourseByTeacher = async (req, res) => {
@@ -203,7 +212,7 @@ export const getPurchasedCourseByStudentId = async (req, res) => {
     const purchasedCourses = await CoursePurchase.find({
       userId: studentId,
       status: "completed",
-    }).populate("courseId")
+    }).populate({path:"courseId", select:"-enrolledStudents", populate:{path:"teacher", select:"username email"}})
 
     if (!purchasedCourses || purchasedCourses.length === 0) {
       return res.status(200).json({ purchasedCourse: [] });
@@ -216,7 +225,10 @@ export const getPurchasedCourseByStudentId = async (req, res) => {
       const courseId = purchase.courseId?._id?.toString();
       if (courseId && !seenCourses.has(courseId)) {
         seenCourses.add(courseId);
-        uniqueCourses.push(purchase);
+        uniqueCourses.push({
+          courseId: purchase.courseId,
+          purchaseIP: purchase.purchaseIp || null,
+        });
       }
     }
 

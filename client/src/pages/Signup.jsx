@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthStore } from "../store/AuthStore";
 import { GrFormViewHide } from "react-icons/gr";
 import { BiShow } from "react-icons/bi";
+import { ThemeStore } from "../store/ThemeStore";
 
 const Signup = () => {
   const [user, setUser] = useState({
@@ -14,8 +15,11 @@ const Signup = () => {
   });
   const navigate = useNavigate();
   const { storeToken } = AuthStore();
+  const { theme } = ThemeStore();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const isDark = theme === "dark";
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -33,6 +37,7 @@ const Signup = () => {
     }
     if (password !== confirmPassword) {
       toast.error("Password didn't match.");
+      return false;
     }
     return true;
   };
@@ -58,18 +63,30 @@ const Signup = () => {
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-96">
+    <div
+      className={`flex items-center justify-center min-h-screen transition-colors duration-300 ${
+        isDark ? "bg-gray-900" : "bg-gray-100"
+      }`}
+    >
+      <div
+        className={`shadow-lg rounded-lg p-8 w-96 transition-colors duration-300 ${
+          isDark ? "bg-gray-800 text-white" : "bg-white text-gray-900"
+        }`}
+      >
         <h1 className="text-2xl font-bold text-center mb-6">Sign Up</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
               htmlFor="username"
-              className="block text-sm font-medium text-gray-700"
+              className={`block text-sm font-medium ${
+                isDark ? "text-gray-300" : "text-gray-700"
+              }`}
             >
               Username
             </label>
@@ -80,13 +97,19 @@ const Signup = () => {
               placeholder="John Doe"
               value={user.username}
               onChange={handleChange}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className={`mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 ${
+                isDark
+                  ? "bg-gray-700 text-white border-gray-600 placeholder-gray-400"
+                  : "bg-white text-black border-gray-300"
+              }`}
             />
           </div>
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className={`block text-sm font-medium ${
+                isDark ? "text-gray-300" : "text-gray-700"
+              }`}
             >
               Email Address
             </label>
@@ -97,13 +120,19 @@ const Signup = () => {
               placeholder="abc@example.com"
               value={user.email}
               onChange={handleChange}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className={`mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 ${
+                isDark
+                  ? "bg-gray-700 text-white border-gray-600 placeholder-gray-400"
+                  : "bg-white text-black border-gray-300"
+              }`}
             />
           </div>
           <div className="relative">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className={`block text-sm font-medium ${
+                isDark ? "text-gray-300" : "text-gray-700"
+              }`}
             >
               Password
             </label>
@@ -114,11 +143,19 @@ const Signup = () => {
               placeholder="********"
               value={user.password}
               onChange={handleChange}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className={`mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 ${
+                isDark
+                  ? "bg-gray-700 text-white border-gray-600 placeholder-gray-400"
+                  : "bg-white text-black border-gray-300"
+              }`}
             />
             <span
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700"
+              className={`absolute right-3 top-11 transform -translate-y-1/2 cursor-pointer ${
+                isDark
+                  ? "text-gray-300 hover:text-white"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
             >
               {showPassword ? (
                 <BiShow size={20} />
@@ -130,7 +167,9 @@ const Signup = () => {
           <div>
             <label
               htmlFor="confirmPassword"
-              className="block text-sm font-medium text-gray-700"
+              className={`block text-sm font-medium ${
+                isDark ? "text-gray-300" : "text-gray-700"
+              }`}
             >
               Confirm Password
             </label>
@@ -141,7 +180,11 @@ const Signup = () => {
               placeholder="********"
               value={user.confirmPassword}
               onChange={handleChange}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className={`mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 ${
+                isDark
+                  ? "bg-gray-700 text-white border-gray-600 placeholder-gray-400"
+                  : "bg-white text-black border-gray-300"
+              }`}
             />
           </div>
           <button
@@ -157,8 +200,15 @@ const Signup = () => {
           </button>
         </form>
         <div className="text-center mt-4">
-          <p className="text-sm text-gray-600">Already have an account?</p>
-          <Link to="/signin" className="text-blue-500 hover:underline mt-1">
+          <p
+            className={`text-sm ${isDark ? "text-gray-400" : "text-gray-600"}`}
+          >
+            Already have an account?
+          </p>
+          <Link
+            to="/signin"
+            className="text-blue-500 hover:underline mt-1 block"
+          >
             Log In Here
           </Link>
         </div>

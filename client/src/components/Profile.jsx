@@ -129,7 +129,7 @@ const Profile = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`mt-4 bg-blue-500 px-4 py-2 text-white rounded hover:cursor-pointer ${isLoading && "bg-gray-400 cursor-not-allowed"}`}
+            className={`mt-4 bg-blue-500 px-4 py-2 text-white rounded ${isLoading && "bg-gray-400 cursor-not-allowed"}`}
           >
             {isLoading ? "Updating" : "Update"}
           </button>

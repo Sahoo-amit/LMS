@@ -13,7 +13,7 @@ router.delete('/delete_course/:id', auth, authTeacher, deleteCourse)
 router.put('/update_course/:id', auth, authTeacher, upload.single("image"), updateCourse)
 router.post("/:courseId/lecture", auth, authTeacher, createLecture);
 router.get("/lectures/:id", auth, authTeacher, getLecture)
-router.post("/:courseId/lecture/:lectureId", auth, authTeacher, editLecture);
+router.post("/:courseId/lecture/:lectureId", auth, authTeacher, editLecture)
 router.get("/lecture/:id", auth, getLectureById)
 router.delete("/lecture/:id", auth, authTeacher, removeLecture)
 router.put("/:id", auth, authTeacher, publishCourse)

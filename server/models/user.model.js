@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema(
     resetOTPExpire: { type: Number, default: 0 },
     role: { type: String, enum: ["student", "teacher", "admin"], default: "student" },
     enrolledCourse : [{type: mongoose.Schema.Types.ObjectId, ref:"Course"}],
-    photoUrl : {type: String, default: ""}
+    photoUrl : {type: String, default: "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
   },
   { timestamps: true }
 );

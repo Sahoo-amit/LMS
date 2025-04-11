@@ -63,7 +63,7 @@ const AllUser = () => {
           },
         }
       );
-      toast.success("Course deleted successfully.")
+      toast.success("User deleted successfully.")
       getUser();
     } catch (error) {
       console.log(error);

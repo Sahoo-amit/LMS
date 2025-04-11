@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from 'react-hot-toast'
+import toast from "react-hot-toast";
+import { ThemeStore } from "../store/ThemeStore";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -11,9 +12,11 @@ const ForgotPassword = () => {
   const [verified, setVerified] = useState(false);
   const [token, setToken] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
+  const { theme } = ThemeStore();
+  const isDark = theme === "dark";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -75,8 +78,8 @@ const ForgotPassword = () => {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    if(newPassword !== confirmPassword){
-      return toast.error("Password must be same.")
+    if (newPassword !== confirmPassword) {
+      return toast.error("Passwords must match.");
     }
     setLoading(true);
     setError(null);
@@ -92,7 +95,7 @@ const ForgotPassword = () => {
       setLoading(false);
 
       if (res.ok) {
-        alert("Password reset successfully.");
+        toast.success("Password reset successfully.");
         navigate("/signin");
       } else {
         setError(data);
@@ -105,8 +108,16 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+    <div
+      className={`flex flex-col items-center justify-center min-h-screen px-4 transition-colors duration-300 ${
+        isDark ? "bg-gray-900" : "bg-gray-100"
+      }`}
+    >
+      <div
+        className={`p-6 rounded-lg shadow-md w-full max-w-md transition-colors duration-300 ${
+          isDark ? "bg-gray-800 text-white" : "bg-white text-gray-900"
+        }`}
+      >
         <h1 className="text-2xl font-bold text-center mb-4">Forgot Password</h1>
         {error && <p className="text-red-500 text-center">{error}</p>}
 
@@ -119,12 +130,20 @@ const ForgotPassword = () => {
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                isDark
+                  ? "bg-gray-700 text-white border-gray-600 placeholder-gray-400"
+                  : "bg-white text-black border-gray-300"
+              }`}
             />
             <button
               type="submit"
               disabled={loading}
-              className="w-full cursor-pointer bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 disabled:bg-gray-400"
+              className={`w-full py-2 rounded-lg transition duration-300 ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600 text-white"
+              }`}
             >
               {loading ? "Sending..." : "Send OTP"}
             </button>
@@ -135,7 +154,11 @@ const ForgotPassword = () => {
               type="email"
               value={email}
               disabled
-              className="w-full p-2 border rounded-lg bg-gray-200"
+              className={`w-full p-2 rounded-lg ${
+                isDark
+                  ? "bg-gray-700 text-white border border-gray-600"
+                  : "bg-gray-200 text-black border border-gray-300"
+              }`}
             />
             <input
               type="text"
@@ -144,12 +167,20 @@ const ForgotPassword = () => {
               name="otp"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                isDark
+                  ? "bg-gray-700 text-white border-gray-600 placeholder-gray-400"
+                  : "bg-white text-black border-gray-300"
+              }`}
             />
             <button
               type="submit"
               disabled={loading}
-              className="w-full cursor-pointer bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 disabled:bg-gray-400"
+              className={`w-full py-2 rounded-lg transition duration-300 ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-green-500 hover:bg-green-600 text-white"
+              }`}
             >
               {loading ? "Verifying..." : "Verify OTP"}
             </button>
@@ -160,7 +191,11 @@ const ForgotPassword = () => {
               type="email"
               value={email}
               disabled
-              className="w-full p-2 border rounded-lg bg-gray-200"
+              className={`w-full p-2 rounded-lg ${
+                isDark
+                  ? "bg-gray-700 text-white border border-gray-600"
+                  : "bg-gray-200 text-black border border-gray-300"
+              }`}
             />
             <input
               type="password"
@@ -169,7 +204,11 @@ const ForgotPassword = () => {
               name="newPassword"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                isDark
+                  ? "bg-gray-700 text-white border-gray-600 placeholder-gray-400"
+                  : "bg-white text-black border-gray-300"
+              }`}
             />
             <input
               type="password"
@@ -178,12 +217,20 @@ const ForgotPassword = () => {
               name="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                isDark
+                  ? "bg-gray-700 text-white border-gray-600 placeholder-gray-400"
+                  : "bg-white text-black border-gray-300"
+              }`}
             />
             <button
               type="submit"
               disabled={loading}
-              className="w-full cursor-pointer bg-purple-500 text-white py-2 rounded-lg hover:bg-purple-600 disabled:bg-gray-400"
+              className={`w-full py-2 rounded-lg transition duration-300 ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-purple-500 hover:bg-purple-600 text-white"
+              }`}
             >
               {loading ? "Updating..." : "Reset Password"}
             </button>

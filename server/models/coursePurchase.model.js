@@ -25,6 +25,9 @@ const coursePurchaseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    purchaseIp:{
+      type: String
+    }
   },
   { timestamps: true }
 );

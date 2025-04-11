@@ -1,24 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { ThemeStore } from "../store/ThemeStore";
 
 const CourseList = () => {
   const [courses, setCourses] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredCourses, setFilteredCourses] = useState([]);
-  const [sortOrder, setSortOrder] = useState("asc"); 
-  const navigate = useNavigate();
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [loading, setLoading] = useState(false);
+
+  const { theme } = ThemeStore();
+  const isDark = theme === "dark";
 
   const getCourses = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/courses/published_course", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
+      setLoading(true);
+      const res = await fetch(
+        "http://localhost:3000/api/courses/published_course",
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       const data = await res.json();
       setCourses(data);
       setFilteredCourses(data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -48,67 +58,78 @@ const CourseList = () => {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto p-5 mt-20">
-      <div className="flex justify-between mb-6">
-        <div className="flex items-center space-x-4 justify-between w-full">
+    <div
+      className={`min-h-screen px-4 py-16 mt-10 transition-colors duration-300 ${
+        isDark ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-10">
           <input
             type="text"
-            placeholder="Search courses by category..."
+            placeholder="Search courses by title..."
             value={search}
             onChange={handleSearchChange}
-            className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+            className={`w-full sm:w-1/2 px-4 py-2 rounded-md border focus:ring-2 focus:ring-blue-500 outline-none transition ${
+              isDark
+                ? "bg-gray-800 text-white border-gray-700 placeholder-gray-400"
+                : "bg-gray-100 text-gray-900 border-gray-300 placeholder-gray-500"
+            }`}
           />
           <button
             onClick={handleSortChange}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+            className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition"
           >
             {sortOrder === "asc" ? "Sort A-Z" : "Sort Z-A"}
           </button>
         </div>
-      </div>
-      <div>
-        {filteredCourses.length === 0 ? (
-          <p className="text-center text-gray-500 text-lg">
-            No matching courses found
+        {loading ? (
+          <p className="text-center text-lg font-medium">Loading courses...</p>
+        ) : filteredCourses.length === 0 ? (
+          <p className="text-center text-lg text-gray-900 dark:text-gray-400">
+            No matching courses found.
           </p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {filteredCourses.map((item, index) => {
-              const {
-                _id,
-                title,
-                image,
-                price,
-                category,
-                description,
-              } = item;
-              return (
+            {filteredCourses.map(
+              ({ _id, title, image, price, category, description }, index) => (
                 <div
                   key={index}
-                  className="bg-white shadow-lg inset-shadow-black rounded-lg overflow-hidden transition-transform duration-300 hover:scale-105"
+                  className={`rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:scale-105 ${
+                    isDark ? "bg-gray-800" : "bg-gray-100"
+                  }`}
                 >
                   <img
                     src={image}
-                    alt="Course Image"
+                    alt={title}
                     className="w-full h-40 object-cover"
                   />
                   <div className="p-4">
                     <Link to={`/courses/${_id}`}>
-                      <h2 className="text-lg font-semibold text-gray-900 hover:underline">
+                      <h2 className="text-lg font-semibold hover:underline mb-1">
                         {title}
                       </h2>
                     </Link>
-                    <p className="text-sm text-gray-500 mb-2">
-                      Category: {category}
+                    <p
+                      className={`text-sm mt-2 line-clamp-3 ${
+                        isDark ? "text-gray-300" : "text-gray-800"
+                      }`}
+                    >
+                      Category: <span className="font-medium">{category}</span>
                     </p>
-                    <p className="text-gray-700 font-medium">
-                      Price: <span className="text-green-600">${price}</span>
+                    <p className="text-base font-semibold text-green-600 dark:text-green-400">
+                      Rs.{price}
                     </p>
-                    <p className="text-sm text-gray-600 mt-2" dangerouslySetInnerHTML={{__html: description}}></p>
+                    <p
+                      className={`text-sm mt-2 line-clamp-3 ${
+                        isDark ? "text-gray-300" : "text-gray-800"
+                      }`}
+                      dangerouslySetInnerHTML={{ __html: description }}
+                    />
                   </div>
                 </div>
-              );
-            })}
+              )
+            )}
           </div>
         )}
       </div>

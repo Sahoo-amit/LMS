@@ -61,7 +61,7 @@ export const getCourses = async(req, res)=>{
 export const getSingleCourse = async(req, res)=>{
     try {
         const {id} = req.params
-        const course = await Course.findById(id).populate("teacher","username").populate("lectures");
+        const course = await Course.findById(id).populate("teacher","username email",).populate("lectures");
         if(!course){
             return res.status(404).json({message: "Course not found."})
         }
@@ -201,7 +201,7 @@ export const publishCourse = async(req, res)=>{
 
         const statusMessage = course.isPublished ? "Published" : "Unpublished";
         return res.status(200).json({
-          message: `Course is ${statusMessage}`,
+          message: `Course is ${statusMessage}`
         });
     } catch (error) {
         console.log(error)
