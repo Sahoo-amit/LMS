@@ -1,14 +1,14 @@
 import express from 'express'
 import upload from '../config/multer.js'
-import { createCourse, editLecture, updateCourse, getCourses, getSingleCourse, getCourseByTeacherId, deleteCourse, createLecture, getLecture, removeLecture, getLectureById, publishCourse, getPublishCourse } from '../controllers/courses.contoller.js'
-import { auth, authTeacher } from '../middlewares/auth.middleware.js'
+import { createCourse, editLecture, updateCourse, getCourses, getSingleCourse, getCourseByTeacherId, deleteCourse, createLecture, getLecture, removeLecture, getLectureById, publishCourse, getPublishCourse, getAllCourseForAdmin } from '../controllers/courses.contoller.js'
+import { auth, authAdmin, authTeacher } from '../middlewares/auth.middleware.js'
 
 const router = express.Router()
 
 router.get('/get_course', getCourses)
 router.get('/get_course/:id', auth, getSingleCourse)
 router.post('/createcourse', auth, authTeacher, createCourse)
-router.get('/courseby_teacher/:id', auth, authTeacher, getCourseByTeacherId)
+router.get('/courseby_teacher', auth, authTeacher, getCourseByTeacherId)
 router.delete('/delete_course/:id', auth, authTeacher, deleteCourse)
 router.put('/update_course/:id', auth, authTeacher, upload.single("image"), updateCourse)
 router.post("/:courseId/lecture", auth, authTeacher, createLecture);
@@ -18,5 +18,6 @@ router.get("/lecture/:id", auth, getLectureById)
 router.delete("/lecture/:id", auth, authTeacher, removeLecture)
 router.put("/:id", auth, authTeacher, publishCourse)
 router.get("/published_course", getPublishCourse)
+router.get("/admin_details", auth, authAdmin, getAllCourseForAdmin)
 
 export default router

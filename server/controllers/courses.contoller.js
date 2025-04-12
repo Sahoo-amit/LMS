@@ -73,7 +73,7 @@ export const getSingleCourse = async(req, res)=>{
 
 export const getCourseByTeacherId = async(req, res)=>{
     try {
-        const teacherID = req.params.id
+        const teacherID = req.id
         if(!teacherID){
             return res.status(400).json("Teacher ID is required.")
         }
@@ -214,6 +214,16 @@ export const getPublishCourse = async(req, res)=>{
         if(!courses){
             return res.status(404).json({message: "No course is published."})
         }
+        res.status(200).json(courses)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const getAllCourseForAdmin = async(req,res)=>{
+    try {
+        const courses = await Course.find({isPublished:true}).populate("teacher", "username email").populate('enrolledStudents', '_id')
         res.status(200).json(courses)
     } catch (error) {
         console.log(error)

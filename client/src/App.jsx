@@ -40,7 +40,7 @@ const App = () => {
             {role === "teacher" && (
               <>
                 <Route path="addCourse" element={<AddCourse />} />
-                <Route path="dashboard" element={<DashBoard />} />
+                <Route path="" element={<DashBoard />} />
                 <Route path="myUploads" element={<MyCourse />} />
                 <Route path="uploadLecture" element={<UploadLecture />} />
                 <Route path="editCourse/:id" element={<EditCourse />} m />
@@ -56,7 +56,7 @@ const App = () => {
             )}
             {role === "admin" && (
               <>
-                <Route path="admin_dashboard" element={<AdminDashboard />} />
+                <Route path="" element={<AdminDashboard />} />
                 <Route path="getuser" element={<AllUser />} />
               </>
             )}

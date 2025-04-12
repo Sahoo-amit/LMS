@@ -3,7 +3,8 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { AuthStore } from "../store/AuthStore";
 import toast from "react-hot-toast";
-import ClipLoader from 'react-spinners/ClipLoader'
+import ClipLoader from "react-spinners/ClipLoader";
+import { ThemeStore } from "../store/ThemeStore";
 
 const EditLecture = () => {
   const location = useLocation();
@@ -19,11 +20,12 @@ const EditLecture = () => {
   const { courseId, lectureId } = useParams();
   const navigate = useNavigate();
   const token = AuthStore((state) => state.token);
-  
+  const theme = ThemeStore((state) => state.theme);
+
   const override = {
     display: "block",
     margin: "0 auto",
-    borderColor: "red",
+    borderColor: theme === "dark" ? "white" : "red", // Dynamic color based on theme
   };
 
   const videoUpload = async (e) => {
@@ -95,11 +97,17 @@ const EditLecture = () => {
   };
 
   return (
-    <div className="p-5">
+    <div
+      className={`px-5 min-h-screen py-20 ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+      }`}
+    >
       <div className="flex items-center gap-10">
         <button
           onClick={() => navigate(-1)}
-          className="text-3xl cursor-pointer"
+          className={`text-3xl cursor-pointer ${
+            theme === "dark" ? "text-white" : "text-black"
+          }`}
         >
           <IoArrowBackCircleSharp />
         </button>
@@ -111,15 +119,26 @@ const EditLecture = () => {
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col space-y-2 mt-7 bg-gray-300 p-2 rounded-lg"
+          className={`flex flex-col space-y-2 mt-7 p-2 rounded-lg ${
+            theme === "dark" ? "bg-gray-700" : "bg-gray-300"
+          }`}
         >
           <div className="flex flex-col space-y-2">
-            <label htmlFor="title" className="font-medium">
+            <label
+              htmlFor="title"
+              className={`font-medium ${
+                theme === "dark" ? "text-white" : "text-black"
+              }`}
+            >
               Title
             </label>
             <input
               type="text"
-              className="border rounded-lg p-2"
+              className={`border rounded-lg p-2 ${
+                theme === "dark"
+                  ? "bg-gray-800 text-white"
+                  : "bg-white text-black"
+              }`}
               value={lecture.lectureTitle}
               onChange={(e) =>
                 setLecture({ ...lecture, lectureTitle: e.target.value })
@@ -129,19 +148,26 @@ const EditLecture = () => {
 
           <div className="flex items-center gap-4">
             <div className="flex flex-col space-y-2">
-              <label htmlFor="video" className="font-medium">
+              <label
+                htmlFor="video"
+                className={`font-medium ${
+                  theme === "dark" ? "text-white" : "text-black"
+                }`}
+              >
                 Video<span className="text-red-600">*</span>
               </label>
               <input
                 type="file"
                 accept="video/*"
                 required
-                className="border rounded-lg p-2 w-fit font-medium"
+                className={`border rounded-lg p-2 w-fit font-medium ${
+                  theme === "dark" ? "bg-gray-800" : "bg-white"
+                }`}
                 onChange={videoUpload}
               />
             </div>
             <ClipLoader
-              color={"red"}
+              color={theme === "dark" ? "white" : "red"}
               loading={isLoading}
               cssOverride={override}
               size={150}
@@ -167,7 +193,9 @@ const EditLecture = () => {
             <button
               type="submit"
               disabled={isUploading || isLoading}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+              className={`bg-blue-500 text-white px-4 py-2 rounded-lg ${
+                theme === "dark" ? "hover:bg-blue-400" : "hover:bg-blue-600"
+              }`}
             >
               {isUploading || isLoading ? "Please wait..." : "Upload lecture"}
             </button>

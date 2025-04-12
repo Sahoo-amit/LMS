@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { AuthStore } from "../../store/AuthStore";
+import { ThemeStore } from "../../store/ThemeStore";
 import toast from "react-hot-toast";
 
 const AllUser = () => {
   const token = AuthStore((state) => state.token);
+  const theme = ThemeStore((state) => state.theme);
+  const isDark = theme === "dark";
+
   const [users, setUsers] = useState([]);
   const [editableRow, setEditableRow] = useState(null);
   const [roleSelections, setRoleSelections] = useState({});
@@ -17,7 +21,6 @@ const AllUser = () => {
         },
       });
       const data = await res.json();
-      console.log(data)
       setUsers(data);
       const roles = {};
       data.forEach((user) => {
@@ -31,18 +34,15 @@ const AllUser = () => {
 
   const updateRole = async (id) => {
     try {
-      const res = await fetch(
-        `http://localhost:3000/api/auth/updateRole/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ newRole: roleSelections[id] }),
-        }
-      );
-      toast.success("Role updated successfully.")
+      await fetch(`http://localhost:3000/api/auth/updateRole/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ newRole: roleSelections[id] }),
+      });
+      toast.success("Role updated successfully.");
       setEditableRow(null);
       getUser();
     } catch (error) {
@@ -54,16 +54,13 @@ const AllUser = () => {
     const confirmDelete = window.confirm("Are you sure to remove this user?");
     if (!confirmDelete) return;
     try {
-      const res = await fetch(
-        `http://localhost:3000/api/auth/deleteUser/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      toast.success("User deleted successfully.")
+      await fetch(`http://localhost:3000/api/auth/deleteUser/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success("User deleted successfully.");
       getUser();
     } catch (error) {
       console.log(error);
@@ -79,11 +76,27 @@ const AllUser = () => {
   }, []);
 
   return (
-    <div className="p-6">
+    <div
+      className={`px-6 py-20 ${
+        isDark ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+      }`}
+    >
       <h1 className="text-2xl font-bold mb-6">User Details</h1>
-      <div className="overflow-x-auto rounded-xl shadow">
-        <table className="min-w-full bg-white border border-gray-200">
-          <thead className="bg-gray-100 text-gray-700 text-left text-sm uppercase">
+      <div
+        className={`overflow-x-auto rounded-xl shadow ${
+          isDark ? "bg-gray-800" : "bg-white"
+        }`}
+      >
+        <table
+          className={`min-w-full border ${
+            isDark ? "border-gray-700" : "border-gray-200"
+          }`}
+        >
+          <thead
+            className={`${
+              isDark ? "bg-gray-700 text-gray-300" : "bg-gray-100 text-gray-700"
+            } text-left text-sm uppercase`}
+          >
             <tr>
               <th className="px-6 py-3 border-b">Profile Picture</th>
               <th className="px-6 py-3 border-b">Username</th>
@@ -93,9 +106,16 @@ const AllUser = () => {
               <th className="px-6 py-3 border-b">Delete User</th>
             </tr>
           </thead>
-          <tbody className="text-gray-800 text-sm">
+          <tbody
+            className={`${isDark ? "text-gray-300" : "text-gray-800"} text-sm`}
+          >
             {users?.map((item) => (
-              <tr key={item._id} className="hover:bg-gray-50">
+              <tr
+                key={item._id}
+                className={`${
+                  isDark ? "hover:bg-gray-700" : "hover:bg-gray-50"
+                }`}
+              >
                 <td className="px-6 py-4 border-b">
                   <img
                     src={item.photoUrl}
@@ -107,7 +127,7 @@ const AllUser = () => {
                 <td className="px-6 py-4 border-b">
                   <a
                     href={`mailto:${item.email}`}
-                    className="text-blue-600 hover:underline"
+                    className="text-blue-500 hover:underline"
                   >
                     {item.email}
                   </a>
@@ -117,7 +137,13 @@ const AllUser = () => {
                     value={roleSelections[item._id]}
                     onChange={(e) => handleRoleChange(item._id, e.target.value)}
                     disabled={editableRow !== item._id}
-                    className={`px-2 py-1 border rounded ${editableRow !== item._id ? "cursor-not-allowed bg-gray-400":"cursor-pointer"}`}
+                    className={`px-2 py-1 border rounded w-full ${
+                      editableRow !== item._id
+                        ? "cursor-not-allowed bg-gray-500 text-white"
+                        : `${
+                            isDark ? "bg-gray-900 text-white" : "bg-white"
+                          } cursor-pointer`
+                    }`}
                   >
                     <option value="student">Student</option>
                     <option value="teacher">Teacher</option>
