@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthStore } from "../store/AuthStore";
 import { ThemeStore } from "../store/ThemeStore";
 import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
@@ -39,12 +39,12 @@ const Navbar = () => {
           </button>
 
           {isAuthenticated && role === "student" && (
-            <Link
+            <NavLink
               to="/my_enrollment"
-              className={`hover:${isDark ? "text-blue-300" : "text-blue-600"}`}
+              className={({isActive})=>`${isActive? "text-orange-600":""} hover:${isDark ? "text-blue-300" : "text-blue-600"} font-semibold`}
             >
-              My Enrollments
-            </Link>
+              My Learning
+            </NavLink>
           )}
 
           {!isAuthenticated ? (

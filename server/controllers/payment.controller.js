@@ -7,59 +7,69 @@ import fetch from 'node-fetch'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-export const createCheckoutSession = async(req,res)=>{
-    try {
-        const userId = req.id;
-        const {courseId} = req.body
-        const ipResponse = await fetch("https://api.ipify.org?format=json");
-        const ipData = await ipResponse.json();
-        const userIP = ipData.ip;
-
-        const course = await Course.findById(courseId)
-        if(!course){
-            return res.status(404).json({message: "Course not found."})
-        }
-        const newPurchase = new CoursePurchase({
-          courseId,
-          userId,
-          status: "pending",
-          amount: course.price,
-          purchaseIp: userIP
-        })
-        const session = await stripe.checkout.sessions.create({
-          payment_method_types: ["amazon_pay", "card"],
-          line_items: [
-            {
-              price_data: {
-                currency: "INR",
-                product_data: {
-                  name: course.title,
-                  images: [course.image],
-                },
-                unit_amount: course.price * 100,
-              },
-              quantity: 1,
-            },
-          ],
-          mode: "payment",
-          success_url: `${process.env.FRONTEND_URL}/my_enrollment`,
-          cancel_url: `${process.env.FRONTEND_URL}/course_details`,
-          metadata:{
-            courseId: courseId.toString(),
-            userId: userId.toString(),
-          }
-        });
-        if(!session.url){
-            return res.status(400).json({message:"Error"})
-        }
-        newPurchase.paymentId = session.id
-        await newPurchase.save()
-
-        res.status(200).json({url: session.url})
-    } catch (error) {
-        console.log(error)
-    }
+export const getMyIp = async(req, res)=>{
+  const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+  res.json({ ip });
 }
+
+export const createCheckoutSession = async (req, res) => {
+  try {
+    const userId = req.id;
+    const { courseId } = req.body;
+    const userIP = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ message: "Course not found." });
+    }
+
+    const newPurchase = new CoursePurchase({
+      courseId,
+      userId,
+      status: "pending",
+      amount: course.price,
+      purchaseIp: userIP,
+    });
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "INR",
+            product_data: {
+              name: course.title,
+              images: [course.image],
+            },
+            unit_amount: course.price * 100,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `${process.env.FRONTEND_URL}/my_enrollment`,
+      cancel_url: `${process.env.FRONTEND_URL}/course_details`,
+      metadata: {
+        courseId: courseId.toString(),
+        userId: userId.toString(),
+        userIP: userIP,
+      },
+    });
+
+    if (!session.url) {
+      return res.status(400).json({ message: "Error creating session." });
+    }
+
+    newPurchase.paymentId = session.id;
+    await newPurchase.save();
+
+    res.status(200).json({ url: session.url });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 
 export const stripeWebhook = async (req, res) => {
   let event;

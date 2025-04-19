@@ -28,6 +28,7 @@ import AllUser from "./pages/Admin/AllUser";
 import AdminLayout from "./pages/Admin/AdminLayout";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import PlacementGuide from "./pages/PlacementGuide";
 
 const App = () => {
   const { role } = AuthStore();
@@ -61,6 +62,7 @@ const App = () => {
               </>
             )}
           </Route>
+          <Route path="/placement" element={<PlacementGuide />} />
           <Route path="/courses" element={<CourseList />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/contact" element={<Contact />} />

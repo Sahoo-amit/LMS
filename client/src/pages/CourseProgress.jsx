@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AuthStore } from "../store/AuthStore";
+import Review from "../components/Review";
 
 const CourseProgress = () => {
-  const [course, setCourse] = useState(null);
-  const [currentLecture, setCurrentLecture] = useState(null);
+  const [course, setCourse] = useState(null)
+  const [currentLecture, setCurrentLecture] = useState(null)
+  const [userReview, setUserReview] = useState(null)
   const { id } = useParams();
   const token = AuthStore((state) => state.token);
 
@@ -78,8 +80,29 @@ const CourseProgress = () => {
     }
   };
 
+  const fetchUserReview = async () => {
+    try {
+      const res = await fetch(`http://localhost:3000/api/courses/get_course/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+
+      const userId = data?.currentUserId;
+      const review = data?.course?.reviews?.find(
+        (r) => r.user === userId || r.user?._id === userId
+      );
+      setUserReview(review);
+    } catch (error) {
+      console.error("Error fetching user review:", error);
+    }
+  };
+
   useEffect(() => {
-    getProgress();
+    getProgress()
+    fetchUserReview()
   }, []);
 
   if (!course) return <p className="text-center mt-20">Loading...</p>;
@@ -100,7 +123,7 @@ const CourseProgress = () => {
     <div className="mt-20 max-w-7xl mx-auto p-4">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-semibold">{courseDetails.title}</h1>
-        <button
+        {/* <button
           onClick={completed ? markCourseIncomplete : markCourseComplete}
           className={`px-4 py-2 rounded-sm text-white ${
             completed
@@ -109,7 +132,7 @@ const CourseProgress = () => {
           }`}
         >
           {completed ? "Mark as Incomplete" : "Mark as Complete"}
-        </button>
+        </button> */}
       </div>
 
       <div className="flex flex-col md:flex-row gap-8">
@@ -155,6 +178,9 @@ const CourseProgress = () => {
             ))}
           </div>
         </div>
+      </div>
+      <div>
+        <Review id={id} userReview={userReview} />
       </div>
     </div>
   );

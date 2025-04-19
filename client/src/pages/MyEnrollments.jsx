@@ -15,7 +15,7 @@ const MyEnrollments = () => {
   const navigate = useNavigate();
 
   const getIp = async () => {
-    const res = await fetch("https://api.ipify.org?format=json");
+    const res = await fetch("http://localhost:3000/api/purchase/my-ip");
     const data = await res.json();
     setCurrentIp(data.ip);
   };

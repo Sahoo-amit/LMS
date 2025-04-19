@@ -92,7 +92,7 @@ const CourseList = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredCourses.map(
-              ({ _id, title, image, price, category, description }, index) => (
+              ({ _id, title, image, price, category, description, averageRating }, index) => (
                 <div
                   key={index}
                   className={`rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:scale-105 ${
@@ -126,6 +126,7 @@ const CourseList = () => {
                       }`}
                       dangerouslySetInnerHTML={{ __html: description }}
                     />
+                    <p>Rating: {averageRating}</p>
                   </div>
                 </div>
               )
