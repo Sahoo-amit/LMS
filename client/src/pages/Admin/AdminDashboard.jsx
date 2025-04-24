@@ -6,7 +6,7 @@ import { ThemeStore } from "../../store/ThemeStore";
 const AdminDashboard = () => {
   const [courses, setCourses] = useState([]);
   const token = AuthStore((state) => state.token);
-  const theme = ThemeStore((state) => state.theme); // Get current theme
+  const theme = ThemeStore((state) => state.theme)
 
   const getCourseData = async () => {
     try {

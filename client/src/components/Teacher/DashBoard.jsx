@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { AuthStore } from "../store/AuthStore";
-import { ThemeStore } from "../store/ThemeStore";
+import { AuthStore } from "../../store/AuthStore";
+import { ThemeStore } from "../../store/ThemeStore";
 
 const DashBoard = () => {
   const token = AuthStore((state) => state.token);

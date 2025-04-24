@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { AuthStore } from "../store/AuthStore";
-import { ThemeStore } from "../store/ThemeStore";
-import { CardSkeleton } from "./Skeleton";
+import { AuthStore } from "../../store/AuthStore";
+import { ThemeStore } from "../../store/ThemeStore";
+import { CardSkeleton } from "../Skeleton";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 

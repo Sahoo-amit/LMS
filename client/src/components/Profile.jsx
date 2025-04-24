@@ -6,7 +6,7 @@ import { ThemeStore } from "../store/ThemeStore";
 const Profile = () => {
   const token = AuthStore((state) => state.token);
   const userId = AuthStore((state) => state.userId);
-  const theme = ThemeStore((state) => state.theme); // Get current theme
+  const theme = ThemeStore((state) => state.theme);
   const [isLoading, setIsLoading] = useState(false);
   const [newData, setNewData] = useState({ username: "", photoUrl: null });
   const [userData, setUserData] = useState({});
@@ -76,34 +76,38 @@ const Profile = () => {
   };
 
   return (
-    <div className={`h-screen w-full py-20 transition-colors duration-300 ${
-          theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
-        }`}>
+    <div
+      className={`h-screen w-full py-20 transition-colors duration-300 ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+      }`}
+    >
       <div
         className={`max-w-7xl mx-auto transition-colors duration-300 ${
           theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
         }`}
       >
-        <h1 className="text-2xl font-bold">Profile</h1>
-        <div className="flex gap-10">
-          <img
-            src={userData.photoUrl || "/default-profile.png"}
-            alt="Profile"
-            className="h-24 w-24 rounded-full object-cover border-2 border-gray-300 shadow-md"
-          />
-          <div>
-            <p>
-              Name: <span>{userData.username}</span>
+        <h1 className="text-2xl font-bold text-center mb-6">Profile</h1>
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="flex justify-center md:justify-start">
+            <img
+              src={userData.photoUrl || "/default-profile.png"}
+              alt="Profile"
+              className="h-24 w-24 rounded-full object-cover border-2 border-gray-300 shadow-md"
+            />
+          </div>
+          <div className="flex flex-col justify-center items-center md:items-start">
+            <p className="text-lg mb-2">
+              Name: <span className="font-semibold">{userData.username}</span>
             </p>
-            <p>
-              Email: <span>{userData.email}</span>
+            <p className="text-lg mb-2">
+              Email: <span className="font-semibold">{userData.email}</span>
             </p>
-            <p>
-              Role: <span>{userData.role}</span>
+            <p className="text-lg mb-6">
+              Role: <span className="font-semibold">{userData.role}</span>
             </p>
             <button
               onClick={() => setIsEdit(!isEdit)}
-              className="bg-green-600 px-3 py-1 hover:bg-green-700 duration-200 cursor-pointer rounded-lg text-white mt-6"
+              className="bg-green-600 px-4 py-2 rounded-md text-white mt-6 hover:bg-green-700 duration-200"
             >
               {isEdit ? "Cancel" : "Edit Profile"}
             </button>
@@ -111,9 +115,11 @@ const Profile = () => {
         </div>
 
         {isEdit && (
-          <form onSubmit={updateData} className="mt-4">
-            <div>
-              <label htmlFor="username">Username</label>
+          <form onSubmit={updateData} className="mt-6 w-full md:w-1/2 mx-auto px-4">
+            <div className="mb-4">
+              <label htmlFor="username" className="block text-lg font-semibold">
+                Username
+              </label>
               <input
                 type="text"
                 placeholder="Enter new name"
@@ -121,28 +127,30 @@ const Profile = () => {
                 id="username"
                 value={newData.username}
                 onChange={handleChange}
-                className="border p-2 rounded w-full"
+                className="border p-3 rounded w-full mt-2"
               />
             </div>
-            <div className="mt-3">
-              <label htmlFor="photoUrl">Profile Picture</label>
+            <div className="mb-4">
+              <label htmlFor="photoUrl" className="block text-lg font-semibold">
+                Profile Picture
+              </label>
               <input
                 type="file"
                 name="photoUrl"
                 id="photoUrl"
                 onChange={handleFileChange}
                 accept="image/*"
-                className="border p-2 rounded w-full"
+                className="border p-3 rounded w-full mt-2"
               />
             </div>
             <button
               type="submit"
               disabled={isLoading}
-              className={`mt-4 bg-blue-500 px-4 py-2 text-white rounded ${
+              className={`mt-4 bg-blue-500 px-6 py-3 text-white rounded w-full ${
                 isLoading && "bg-gray-400 cursor-not-allowed"
               }`}
             >
-              {isLoading ? "Updating" : "Update"}
+              {isLoading ? "Updating..." : "Update Profile"}
             </button>
           </form>
         )}

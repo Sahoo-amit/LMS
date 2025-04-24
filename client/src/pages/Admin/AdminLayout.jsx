@@ -42,6 +42,18 @@ const AdminLayout = () => {
           >
             Users
           </NavLink>
+          <NavLink
+            to="getcontact"
+            className={({ isActive }) =>
+              `${
+                isActive ? (isDark ? "bg-gray-600" : "bg-gray-500") : ""
+              } block py-2 px-4 rounded-lg transition-colors ${
+                isDark ? "hover:bg-gray-700" : "hover:bg-gray-300"
+              }`
+            }
+          >
+            Contacts
+          </NavLink>
         </div>
       </div>
       <div className="flex-grow p-6">

@@ -2,6 +2,9 @@ import React from "react";
 import Content from "../components/Content";
 import Testimonials from "../components/Testimonials";
 import { ThemeStore } from "../store/ThemeStore";
+import About from "./About";
+import Contact from "./Contact";
+import Achievement from "../components/Achievement";
 
 const Home = () => {
   const { theme } = ThemeStore();
@@ -17,6 +20,11 @@ const Home = () => {
         <Content />
         <Testimonials />
       </main>
+      <div>
+        <About />
+        <Achievement />
+        <Contact />
+      </div>
     </div>
   );
 };

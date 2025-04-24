@@ -6,29 +6,28 @@ import Home from "./pages/Home";
 import CourseList from "./pages/CourseList";
 import Logout from "./components/Logout";
 import CourseDetails from "./pages/CourseDetails";
-import NotFound from "./pages/NotFound";
-import AddCourse from "./components/AddCourse";
-import MyCourse from "./components/MyCourse";
+import AddCourse from "./components/Teacher/AddCourse";
+import MyCourse from "./components/Teacher/MyCourse";
 import MyEnrollments from "./pages/MyEnrollments";
-import Video from "./components/Video";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import Profile from "./components/Profile";
-import Layout from "./components/Layout";
-import UploadLecture from "./components/UploadLecture";
-import EditCourse from "./components/EditCourse";
-import DashBoard from "./components/DashBoard";
-import Lectures from "./components/Lectures";
-import EditLecture from "./components/EditLecture";
+import Layout from "./components/Teacher/Layout";
+import UploadLecture from "./components/Teacher/UploadLecture";
+import EditCourse from "./components/Teacher/EditCourse";
+import DashBoard from "./components/Teacher/DashBoard";
+import Lectures from "./components/Teacher/Lectures";
+import EditLecture from "./components/Teacher/EditLecture";
 import CourseProgress from "./pages/CourseProgress";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AllUser from "./pages/Admin/AllUser";
 import AdminLayout from "./pages/Admin/AdminLayout";
-import Contact from "./pages/Contact";
-import About from "./pages/About";
 import PlacementGuide from "./pages/PlacementGuide";
+import NotFoundPage from "./components/ErrorPage";
+import AllContact from "./pages/Admin/AllContact";
+import Achievement from "./components/Achievement";
 
 const App = () => {
   const { role } = AuthStore();
@@ -37,7 +36,18 @@ const App = () => {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={ role === "teacher" ? ( <Layout /> ) : role === "admin" ? ( <AdminLayout /> ) : ( <Home /> )}>
+          <Route
+            path="/"
+            element={
+              role === "teacher" ? (
+                <Layout />
+              ) : role === "admin" ? (
+                <AdminLayout />
+              ) : (
+                <Home />
+              )
+            }
+          >
             {role === "teacher" && (
               <>
                 <Route path="addCourse" element={<AddCourse />} />
@@ -59,23 +69,22 @@ const App = () => {
               <>
                 <Route path="" element={<AdminDashboard />} />
                 <Route path="getuser" element={<AllUser />} />
+                <Route path="getcontact" element={<AllContact />} />
               </>
             )}
           </Route>
           <Route path="/placement" element={<PlacementGuide />} />
           <Route path="/courses" element={<CourseList />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<About />} />
           <Route path="/signin" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/reset_password" element={<ResetPassword />} />
           <Route path="/forgot_password" element={<ForgotPassword />} />
           <Route path="/courses/:id" element={<CourseDetails />} />
-          <Route path="/not_found" element={<NotFound />} />
+          <Route path="/card" element={<Achievement />} />
           <Route path="/my_enrollment" element={<MyEnrollments />} />
-          <Route path="/preview/:id" element={<Video />} />
+          <Route path="/*" element={<NotFoundPage />} />
           <Route path="/course_progress/:id" element={<CourseProgress />} />
         </Routes>
       </BrowserRouter>

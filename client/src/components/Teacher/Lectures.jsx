@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AuthStore } from "../store/AuthStore";
+import { AuthStore } from "../../store/AuthStore";
 import toast from "react-hot-toast";
-import { ThemeStore } from "../store/ThemeStore";
+import { ThemeStore } from "../../store/ThemeStore";
 
 const Lectures = () => {
   const { id } = useParams();

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
-import { AuthStore } from "../store/AuthStore";
+import { AuthStore } from "../../store/AuthStore";
 import toast from "react-hot-toast";
 import ClipLoader from "react-spinners/ClipLoader";
-import { ThemeStore } from "../store/ThemeStore";
+import { ThemeStore } from "../../store/ThemeStore";
 
 const EditLecture = () => {
   const location = useLocation();

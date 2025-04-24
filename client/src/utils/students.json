@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Amit Sharma",
+    "company": "Google",
+    "position": "Software Engineer",
+    "image": "/images/students/amit.jpg",
+    "color": "bg-red-500",
+    "testimonial": "Thanks to this LMS platform, I was able to build a solid foundation in data structures and algorithms. Google was a dream come true!"
+  },
+  {
+    "name": "Riya Patel",
+    "company": "Microsoft",
+    "position": "Frontend Developer",
+    "image": "/images/students/riya.jpg",
+    "color": "bg-yellow-500",
+    "testimonial": "The frontend courses helped me master React and TypeScript. I nailed my interviews at Microsoft!"
+  },
+  {
+    "name": "Siddharth Verma",
+    "company": "Amazon",
+    "position": "Backend Developer",
+    "image": "/images/students/siddharth.jpg",
+    "color": "bg-orange-500",
+    "testimonial": "Amazing content and mentorship. The real-world projects gave me confidence to crack Amazon interviews."
+  },
+  {
+    "name": "Neha Gupta",
+    "company": "Meta",
+    "position": "Full Stack Developer",
+    "image": "/images/students/neha.jpg",
+    "color": "bg-gray-500",
+    "testimonial": "The full stack track was so practical and up-to-date. It really prepared me for the technical rounds at Meta."
+  },
+  {
+    "name": "Karan Mehta",
+    "company": "Netflix",
+    "position": "UI/UX Engineer",
+    "image": "/images/students/karan.jpg",
+    "color": "bg-blue-500",
+    "testimonial": "Great design tutorials and projects! I showcased my portfolio confidently and got selected at Netflix."
+  },
+  {
+    "name": "Priya Nair",
+    "company": "Apple",
+    "position": "iOS Developer",
+    "image": "/images/students/priya.jpg",
+    "color": "bg-green-500",
+    "testimonial": "I started from scratch and ended up with an offer from Apple. Forever grateful to this platform."
+  },
+  {
+    "name": "Arjun Reddy",
+    "company": "Adobe",
+    "position": "DevOps Engineer",
+    "image": "/images/students/arjun.jpg",
+    "color": "bg-violet-500",
+    "testimonial": "Their DevOps bootcamp is top-notch. I landed my dream role at Adobe!"
+  }
+]

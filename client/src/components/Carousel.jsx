@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi"; // Import icons
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const images = [
   "https://img.freepik.com/free-vector/hand-drawn-online-college-template-design_23-2150574159.jpg?t=st=1742629009~exp=1742632609~hmac=264d98b2807b78673e7a43a9ceaf56c4127219c48b7cb92cdc57beaf62f6daca&w=1380",
@@ -28,30 +28,31 @@ const Carousel = () => {
   }, []);
 
   return (
-    <div className="relative flex items-center justify-center w-full max-w-5xl mx-auto h-[250px] md:h-[400px] overflow-hidden rounded-lg shadow-lg">
+    <div className="relative flex items-center justify-center w-full max-w-5xl mx-auto h-[200px] sm:h-[250px] md:h-[400px] overflow-hidden rounded-xl shadow-md sm:shadow-lg">
+  
       <button
-        className="absolute left-2 p-2 md:p-3 bg-gray-300 bg-opacity-50 hover:bg-opacity-75 text-white rounded-full transition-all duration-300"
+        className="absolute left-2 p-1 sm:p-2 md:p-3 bg-black bg-opacity-30 hover:bg-opacity-60 text-white rounded-full transition"
         onClick={prevSlide}
       >
-        <FiChevronLeft size={24} />
-      </button>
+        <FiChevronLeft className="text-lg sm:text-xl md:text-2xl" />
+      </button> 
       <img
-        className="w-full h-full object-cover transition-all duration-500 ease-in-out"
         src={images[carousel]}
-        alt="slides"
-      />
+        alt={`Slide ${carousel}`}
+        className="w-full h-full object-cover transition-all duration-500 ease-in-out"
+      /> 
       <button
-        className="absolute right-2 p-2 md:p-3 bg-gray-300 bg-opacity-50 hover:bg-opacity-75 text-white rounded-full transition-all duration-300"
+        className="absolute right-2 p-1 sm:p-2 md:p-3 bg-black bg-opacity-30 hover:bg-opacity-60 text-white rounded-full transition"
         onClick={nextSlide}
       >
-        <FiChevronRight size={24} />
-      </button>
-      <div className="absolute bottom-3 flex space-x-2">
+        <FiChevronRight className="text-lg sm:text-xl md:text-2xl" />
+      </button> 
+      <div className="absolute bottom-3 flex justify-center items-center space-x-1 sm:space-x-2">
         {images.map((_, index) => (
           <div
             key={index}
-            className={`w-3 h-3 rounded-full ${
-              index === carousel ? "bg-white" : "bg-gray-500 opacity-50"
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${
+              index === carousel ? "bg-white" : "bg-gray-300 opacity-60"
             } transition-all duration-300`}
           ></div>
         ))}

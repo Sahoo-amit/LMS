@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import { ThemeStore } from "../store/ThemeStore";
+import { ThemeStore } from "../../store/ThemeStore";
 
 const Layout = () => {
   const theme = ThemeStore((state) => state.theme);

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
-import { AuthStore } from "../store/AuthStore";
-import { ThemeStore } from "../store/ThemeStore";
+import { AuthStore } from "../../store/AuthStore";
+import { ThemeStore } from "../../store/ThemeStore";
 
 const EditCourse = () => {
   const token = AuthStore((state) => state.token);
