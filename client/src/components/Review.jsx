@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { AuthStore } from "../store/AuthStore";
 
 const Review = ({ id, userReview }) => {
-  console.log(userReview)
   const [rating, setRating] = useState(userReview?.rating || 0);
   const [comment, setComment] = useState(userReview?.comment || "");
   const [loading, setLoading] = useState(false);

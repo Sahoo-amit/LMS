@@ -20,6 +20,7 @@ const CourseProgress = () => {
       });
       const data = await res.json();
       setCourse(data.data);
+      console.log(data.data)
     } catch (error) {
       console.log(error);
     }
@@ -140,12 +141,13 @@ const CourseProgress = () => {
           <video
             key={currentLecture?._id || initialLecture._id}
             controls
-            src={currentLecture?.videoUrl || initialLecture.videoUrl}
             className="w-full rounded-lg"
             onPlay={() =>
               markLectureAsViewed(currentLecture?._id || initialLecture._id)
             }
-          />
+          >
+            <source src={currentLecture?.videoUrl || initialLecture.videoUrl} />
+          </video>
           <h3 className="mt-4 font-medium text-lg">
             {`Lecture ${
               courseDetails.lectures.findIndex(
