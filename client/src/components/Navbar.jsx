@@ -26,7 +26,7 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
         <h1 className="text-2xl sm:text-3xl font-semibold">
-          <Link to="/">E-Learning</Link>
+          <Link to="/">LearnHub</Link>
         </h1> 
         <div className="hidden md:flex items-center gap-6">
           {isAuthenticated && role === "student" && (

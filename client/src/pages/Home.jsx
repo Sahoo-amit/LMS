@@ -5,6 +5,7 @@ import { ThemeStore } from "../store/ThemeStore";
 import About from "./About";
 import Contact from "./Contact";
 import Achievement from "../components/Achievement";
+import Footer from "./Footer";
 
 const Home = () => {
   const { theme } = ThemeStore();
@@ -23,8 +24,9 @@ const Home = () => {
       <div>
         <About />
         <Achievement />
-        {/* <Contact /> */}
+        <Contact />
       </div>
+      <Footer />
     </div>
   );
 };

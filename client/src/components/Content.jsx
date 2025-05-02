@@ -17,22 +17,25 @@ const Content = () => {
 
         <div className="mt-6 sm:mt-8 text-sm sm:text-base md:text-lg leading-relaxed text-center">
           <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-2">
-            Welcome to E-Learning
+            Welcome to LearnHub
           </h2>
 
           <p className="px-2 sm:px-6">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero
-            nemo ratione aliquam soluta iure quos, aut, voluptatum atque cum
-            laboriosam voluptate quas ab nisi quo, ad omnis vero itaque fugiat.
+            LearnHub is a modern online learning platform designed to empower
+            students and professionals with high-quality, accessible education.
+            From programming and design to business and marketing, we offer a
+            wide range of courses tailored to meet your learning goals.
           </p>
 
           <span className="block mt-4 font-semibold text-sm sm:text-base">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+            Learn from top industry experts and enhance your skills.
           </span>
 
           <p className="mt-4 px-2 sm:px-6">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero illo
-            facilis maiores id est saepe excepturi eligendi eveniet?
+            Whether you're looking to upskill, change careers, or explore a new
+            passion, LearnHub provides you with the tools, resources, and
+            community support to succeed. Start learning at your own pace,
+            anytime, from anywhere.
           </p>
         </div>
       </div>

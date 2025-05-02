@@ -13,6 +13,7 @@ const About = () => {
 
   return (
     <motion.div
+      id="about"
       className={`max-w-5xl mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-16 md:py-20 transition-colors duration-300 ${
         theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
       }`}
@@ -41,7 +42,7 @@ const About = () => {
             theme === "dark" ? "text-gray-300" : "text-gray-700"
           }`}
         >
-          At LearnX (your LMS name), our mission is to make high-quality
+          At LearnHub, our mission is to make high-quality
           education accessible to everyone, regardless of background or
           location. We focus on practical skills, expert mentorship, and
           real-world projects to help you become job-ready.
@@ -59,7 +60,7 @@ const About = () => {
             theme === "dark" ? "text-gray-300" : "text-gray-700"
           }`}
         >
-          LearnX started in 2024 with the goal of helping students bridge the
+          LearnHub started in 2024 with the goal of helping students bridge the
           gap between theoretical knowledge and real-world experience. Over
           time, we've built a platform with expert-led courses, hands-on labs,
           and a supportive community of learners.

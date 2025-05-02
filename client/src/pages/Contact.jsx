@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { AuthStore } from "../store/AuthStore";
+import React, { useState } from "react"
 import { ThemeStore } from "../store/ThemeStore";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
@@ -11,8 +10,6 @@ const fadeInOut = {
 };
 
 const Contact = () => {
-  const userId = AuthStore((state) => state.userId);
-  const token = AuthStore((state) => state.token);
   const theme = ThemeStore((state) => state.theme);
 
   const [userData, setUserData] = useState({
@@ -20,24 +17,6 @@ const Contact = () => {
     email: "",
     message: "",
   });
-
-  const getUser = async () => {
-    try {
-      const res = await fetch(
-        `http://localhost:3000/api/auth/getProfile/${userId}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await res.json();
-      setUserData({ username: data.username, email: data.email, message: "" });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -61,19 +40,17 @@ const Contact = () => {
     }
   };
 
-  useEffect(() => {
-    getUser();
-  }, []);
 
   return (
     <motion.div
+      id="contact"
       className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 transition-colors duration-300 ${
         theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
       }`}
       initial="initial"
       whileInView="visible"
       exit="exit"
-      viewport={{ once: false, amount: 0.7 }}
+      viewport={{ once: true, amount: 0.7 }}
       transition={{ duration: 0.5 }}
     >
       <motion.h1
@@ -102,6 +79,7 @@ const Contact = () => {
             name="username"
             type="text"
             value={userData.username}
+            required
             onChange={handleChange}
             className={`w-full p-3 rounded border text-sm sm:text-base ${
               theme === "dark"
@@ -124,6 +102,7 @@ const Contact = () => {
             type="email"
             value={userData.email}
             onChange={handleChange}
+            required
             className={`w-full p-3 rounded border text-sm sm:text-base ${
               theme === "dark"
                 ? "bg-gray-800 border-gray-700 text-white"
