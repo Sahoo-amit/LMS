@@ -14,7 +14,7 @@ config();
 const app = express()
 
 const corsOption = {
-  origin: "http://localhost:8000",
+  origin: process.env.FRONTEND_URL,
   credentials: true,
 };
 app.use(cors(corsOption))
