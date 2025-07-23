@@ -13,13 +13,13 @@ config();
 
 const app = express()
 
-app.use(express.json())
-const corsOption = {
-  origin: process.env.FRONTEND_URL,
-  methods: ["POST", "GET", "PUT", "DELETE"],
-  credentials: true,
-};
-app.use(cors(corsOption))
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    methods: ["POST", "GET", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 app.options("*", cors(corsOption));
 
 app.use('/api/media', mediaRouter)
