@@ -20,6 +20,7 @@ const corsOption = {
   credentials: true,
 };
 app.use(cors(corsOption))
+app.options("*", cors(corsOption));
 
 app.use('/api/media', mediaRouter)
 app.use('/api/auth', authRouter)
