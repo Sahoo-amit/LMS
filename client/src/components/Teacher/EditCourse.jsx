@@ -26,12 +26,15 @@ const EditCourse = () => {
 
   const getCourseById = async()=>{
     try {
-      const res = await fetch(`http://localhost:3000/api/courses/get_course/${id}`,{
-        method:"GET",
-        headers:{
-          "Authorization": `Bearer ${token}`
+      const res = await fetch(
+        `https://lms-31ko.vercel.app/api/courses/get_course/${id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      })
+      );
       const data = await res.json()
       console.log(data)
       setIsLectureAdded(data.course.lectures.length)

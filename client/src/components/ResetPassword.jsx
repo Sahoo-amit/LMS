@@ -12,13 +12,16 @@ const ResetPassword = () => {
             return toast.error("Passwords don't match.")
         }
         try {
-            const res = await fetch("http://localhost:3000/api/auth/reset_password",{
+            const res = await fetch(
+              "https://lms-31ko.vercel.app/api/auth/reset_password",
+              {
                 method: "POST",
-                headers:{
-                    "Content-Type":"application/json",
+                headers: {
+                  "Content-Type": "application/json",
                 },
-                body: JSON.stringify({newPassword, confirmPassword})
-            })
+                body: JSON.stringify({ newPassword, confirmPassword }),
+              }
+            );
             const data = await res.json
             console.log(data)
             setTimeout(()=>navigate('/signin'),2000)
@@ -29,7 +32,7 @@ const ResetPassword = () => {
   return (
     <div>
       <h2>Reset Password</h2>
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <input type="password" placeholder='New password' value={newPassword} onChange={(e)=>setNewPassword(e.target.value)}/>
         <input type="password" placeholder='Confirm password' value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)}/>
         <button type="submit">Reset Password</button>

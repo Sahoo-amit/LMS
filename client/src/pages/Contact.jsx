@@ -26,7 +26,7 @@ const Contact = () => {
     e.preventDefault();
     try {
       const res = await fetch(
-        `http://localhost:3000/api/contact/send_message`,
+        `https://lms-31ko.vercel.app/api/contact/send_message`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

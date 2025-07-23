@@ -5,14 +5,17 @@ const Payment = ({id}) => {
   const token = AuthStore((state)=>state.token)
   const makePayment = async()=>{
     try {
-      const res = await fetch(`http://localhost:3000/api/purchase/checkout/create-checkout-session`,{
-        method: "POST",
-        headers:{
-          "Content-Type": "application/json",
-          "Authorization":`Bearer ${token}`
-        },
-        body: JSON.stringify({ courseId: id })
-      })
+      const res = await fetch(
+        `https://lms-31ko.vercel.app/api/purchase/checkout/create-checkout-session`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ courseId: id }),
+        }
+      );
       const data = await res.json()
       if(data.url){
         window.location.href = data.url

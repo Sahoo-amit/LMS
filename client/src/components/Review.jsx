@@ -21,8 +21,8 @@ const Review = ({ id, userReview }) => {
     try {
       const method = userReview ? "PUT" : "POST";
       const endpoint = userReview
-        ? `http://localhost:3000/api/courses/${id}/review/update`
-        : `http://localhost:3000/api/courses/${id}/review`;
+        ? `https://lms-31ko.vercel.app/api/courses/${id}/review/update`
+        : `https://lms-31ko.vercel.app/api/courses/${id}/review`;
 
       const res = await fetch(endpoint, {
         method,

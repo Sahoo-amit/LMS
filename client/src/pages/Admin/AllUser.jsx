@@ -14,7 +14,7 @@ const AllUser = () => {
 
   const getUser = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/auth/allUser", {
+      const res = await fetch("https://lms-31ko.vercel.app/api/auth/allUser", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -34,7 +34,7 @@ const AllUser = () => {
 
   const updateRole = async (id) => {
     try {
-      await fetch(`http://localhost:3000/api/auth/updateRole/${id}`, {
+      await fetch(`https://lms-31ko.vercel.app/api/auth/updateRole/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +54,7 @@ const AllUser = () => {
     const confirmDelete = window.confirm("Are you sure to remove this user?");
     if (!confirmDelete) return;
     try {
-      await fetch(`http://localhost:3000/api/auth/deleteUser/${id}`, {
+      await fetch(`https://lms-31ko.vercel.app/api/auth/deleteUser/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

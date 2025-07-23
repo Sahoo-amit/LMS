@@ -38,7 +38,7 @@ const Login = () => {
     if (!checkInput()) return;
     setIsLoading(true);
     try {
-      const res = await fetch(`http://localhost:3000/api/auth/signin`, {
+      const res = await fetch(`https://lms-31ko.vercel.app/api/auth/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
