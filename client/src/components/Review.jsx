@@ -50,7 +50,7 @@ const Review = ({ id, userReview }) => {
       <h3 className="text-lg font-medium mb-2">
         {userReview ? "Update Your Review" : "Leave a Review"}
       </h3>
-      <form onSubmit={handleSubmit}>
+      <form action="">
         <div className="flex gap-2 items-center mb-4">
           {[1, 2, 3, 4, 5].map((num) => (
             <span
