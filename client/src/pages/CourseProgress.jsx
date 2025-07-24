@@ -12,7 +12,7 @@ const CourseProgress = () => {
 
   const getProgress = async () => {
     try {
-      const res = await fetch(`https://lms-31ko.vercel.app/api/progress/${id}`, {
+      const res = await fetch(`http://localhost:3000/api/progress/${id}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -29,7 +29,7 @@ const CourseProgress = () => {
   const markLectureAsViewed = async (lectureId) => {
     try {
       await fetch(
-        `https://lms-31ko.vercel.app/api/progress/${id}/lecture/${lectureId}`,
+        `http://localhost:3000/api/progress/${id}/lecture/${lectureId}`,
         {
           method: "PATCH",
           headers: {
@@ -46,7 +46,7 @@ const CourseProgress = () => {
   const markCourseComplete = async () => {
     try {
       const res = await fetch(
-        `https://lms-31ko.vercel.app/api/progress/${id}/complete`,
+        `http://localhost:3000/api/progress/${id}/complete`,
         {
           method: "PATCH",
           headers: {
@@ -65,7 +65,7 @@ const CourseProgress = () => {
   const markCourseIncomplete = async () => {
     try {
       const res = await fetch(
-        `https://lms-31ko.vercel.app/api/progress/${id}/incomplete`,
+        `http://localhost:3000/api/progress/${id}/incomplete`,
         {
           method: "PATCH",
           headers: {
@@ -83,7 +83,7 @@ const CourseProgress = () => {
 
   const fetchUserReview = async () => {
     try {
-      const res = await fetch(`https://lms-31ko.vercel.app/api/courses/get_course/${id}`, {
+      const res = await fetch(`http://localhost:3000/api/courses/get_course/${id}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

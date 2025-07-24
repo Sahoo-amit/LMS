@@ -12,7 +12,7 @@ const AllContact = () => {
 
   const getUser = async () => {
     try {
-      const res = await fetch("https://lms-31ko.vercel.app/api/contact/get_contact", {
+      const res = await fetch("http://localhost:3000/api/contact/get_contact", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -29,7 +29,7 @@ const AllContact = () => {
     const confirmDelete = window.confirm("Are you sure to remove this user?");
     if (!confirmDelete) return;
     try {
-      await fetch(`https://lms-31ko.vercel.app/api/auth/contact/delete_message`, {
+      await fetch(`http://localhost:3000/api/auth/contact/delete_message`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

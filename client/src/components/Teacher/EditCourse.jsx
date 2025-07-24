@@ -27,7 +27,7 @@ const EditCourse = () => {
   const getCourseById = async()=>{
     try {
       const res = await fetch(
-        `https://lms-31ko.vercel.app/api/courses/get_course/${id}`,
+        `http://localhost:3000/api/courses/get_course/${id}`,
         {
           method: "GET",
           headers: {

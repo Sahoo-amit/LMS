@@ -6,7 +6,7 @@ const Payment = ({id}) => {
   const makePayment = async()=>{
     try {
       const res = await fetch(
-        `https://lms-31ko.vercel.app/api/purchase/checkout/create-checkout-session`,
+        `http://localhost:3000/api/purchase/checkout/create-checkout-session`,
         {
           method: "POST",
           headers: {

@@ -12,7 +12,7 @@ const DashBoard = () => {
   const getAllCourses = async () => {
     try {
       const res = await fetch(
-        "https://lms-31ko.vercel.app/api/courses/courseby_teacher",
+        "http://localhost:3000/api/courses/courseby_teacher",
         {
           method: "GET",
           headers: {
