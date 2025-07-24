@@ -15,6 +15,8 @@ export const getMyIp = async(req, res)=>{
 
 export const createCheckoutSession = async (req, res) => {
   try {
+    console.log("Checkout request:", req.body)
+    console.log("User ID from middleware:", req.id)
     const userId = req.id;
     const { courseId } = req.body;
     const userIP = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
