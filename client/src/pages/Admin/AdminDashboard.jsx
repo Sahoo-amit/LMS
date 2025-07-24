@@ -11,7 +11,7 @@ const AdminDashboard = () => {
   const getCourseData = async () => {
     try {
       const res = await fetch(
-        "http://localhost:3000/api/courses/admin_details",
+        "https://lms-backend-z77i.onrender.com/api/courses/admin_details",
         {
           method: "GET",
           headers: {

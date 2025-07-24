@@ -12,7 +12,7 @@ const DashBoard = () => {
   const getAllCourses = async () => {
     try {
       const res = await fetch(
-        "http://localhost:3000/api/courses/courseby_teacher",
+        "https://lms-backend-z77i.onrender.com/api/courses/courseby_teacher",
         {
           method: "GET",
           headers: {

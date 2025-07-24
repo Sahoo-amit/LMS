@@ -16,7 +16,7 @@ const CourseList = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        "http://localhost:3000/api/courses/published_course",
+        "https://lms-backend-z77i.onrender.com/api/courses/published_course",
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

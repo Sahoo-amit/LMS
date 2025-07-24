@@ -27,7 +27,7 @@ const EditCourse = () => {
   const getCourseById = async()=>{
     try {
       const res = await fetch(
-        `http://localhost:3000/api/courses/get_course/${id}`,
+        `https://lms-backend-z77i.onrender.com/api/courses/get_course/${id}`,
         {
           method: "GET",
           headers: {

@@ -37,7 +37,7 @@ const EditLecture = () => {
       setIsLoading(true);
       try {
         const res = await fetch(
-          "http://localhost:3000/api/media/upload_video",
+          "https://lms-backend-z77i.onrender.com/api/media/upload_video",
           {
             method: "POST",
             body: formData,

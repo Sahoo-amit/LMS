@@ -31,7 +31,7 @@ const MyCourse = () => {
     setIsLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:3000/api/courses/courseby_teacher`,
+        `https://lms-backend-z77i.onrender.com/api/courses/courseby_teacher`,
         {
           method: "GET",
           headers: {
@@ -56,7 +56,7 @@ const MyCourse = () => {
 
     try {
       await fetch(
-        `http://localhost:3000/api/courses/delete_course/${id}`,
+        `https://lms-backend-z77i.onrender.com/api/courses/delete_course/${id}`,
         {
           method: "DELETE",
           headers: {
