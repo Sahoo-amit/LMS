@@ -4,6 +4,7 @@ import { CoursePurchase } from '../models/coursePurchase.model.js';
 import { Lecture } from '../models/lecture.model.js';
 import { User } from '../models/user.model.js';
 import fetch from 'node-fetch'
+const FRONTEND_URL = "https://lms-ntj1.onrender.com"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -47,8 +48,8 @@ export const createCheckoutSession = async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `${process.env.FRONTEND_URL}/my_enrollment`,
-      cancel_url: `${process.env.FRONTEND_URL}/course_details`,
+      success_url: `${FRONTEND_URL}/my_enrollment`,
+      cancel_url: `${FRONTEND_URL}/course_details`,
       metadata: {
         courseId: courseId.toString(),
         userId: userId.toString(),

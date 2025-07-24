@@ -9,12 +9,14 @@ import progressRouter from './routes/progress.route.js'
 import contactRouter from './routes/contact.route.js'
 import cors from 'cors'
 
+const FRONTEND_URL = "https://lms-ntj1.onrender.com";
+
 config();
 
 const app = express()
 
 const corsOption = {
-  origin: process.env.FRONTEND_URL,
+  origin: FRONTEND_URL,
   methods: ["POST", "GET", "PUT", "DELETE"],
   credentials: true,
 };
