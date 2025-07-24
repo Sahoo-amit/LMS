@@ -20,14 +20,12 @@ const corsOption = {
   methods: ["POST", "GET", "PUT", "DELETE"],
   credentials: true,
 };
-
-
 app.use(cors(corsOption))
-app.use("/api/purchase", purchaseRouter)
 app.use(express.json())
 
 app.use('/api/media', mediaRouter)
 app.use('/api/auth', authRouter)
+app.use("/api/purchase", purchaseRouter)
 app.use('/api/courses', courseRouter)
 app.use('/api/progress', progressRouter)
 app.use("/api/contact", contactRouter)
