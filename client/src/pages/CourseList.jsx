@@ -16,7 +16,7 @@ const CourseList = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        "https://lms-9f91.vercel.app/api/courses/published_course",
+        "http://localhost:3000/api/courses/published_course",
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

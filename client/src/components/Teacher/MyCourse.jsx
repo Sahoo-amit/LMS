@@ -31,7 +31,7 @@ const MyCourse = () => {
     setIsLoading(true);
     try {
       const res = await fetch(
-        `https://lms-9f91.vercel.app/api/courses/courseby_teacher`,
+        `http://localhost:3000/api/courses/courseby_teacher`,
         {
           method: "GET",
           headers: {
@@ -56,7 +56,7 @@ const MyCourse = () => {
 
     try {
       await fetch(
-        `https://lms-9f91.vercel.app/api/courses/delete_course/${id}`,
+        `http://localhost:3000/api/courses/delete_course/${id}`,
         {
           method: "DELETE",
           headers: {

@@ -11,7 +11,7 @@ const AdminDashboard = () => {
   const getCourseData = async () => {
     try {
       const res = await fetch(
-        "https://lms-9f91.vercel.app/api/courses/admin_details",
+        "http://localhost:3000/api/courses/admin_details",
         {
           method: "GET",
           headers: {

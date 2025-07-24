@@ -25,7 +25,7 @@ const ForgotPassword = () => {
 
     try {
       const res = await fetch(
-        "https://lms-9f91.vercel.app/api/auth/forgot_password",
+        "http://localhost:3000/api/auth/forgot_password",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -54,7 +54,7 @@ const ForgotPassword = () => {
     setError(null);
 
     try {
-      const res = await fetch("https://lms-9f91.vercel.app/api/auth/verify_otp", {
+      const res = await fetch("http://localhost:3000/api/auth/verify_otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),
@@ -85,7 +85,7 @@ const ForgotPassword = () => {
     setError(null);
 
     try {
-      const res = await fetch("https://lms-9f91.vercel.app/api/auth/reset_password", {
+      const res = await fetch("http://localhost:3000/api/auth/reset_password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token, newPassword }),
