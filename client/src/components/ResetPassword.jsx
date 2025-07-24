@@ -13,7 +13,7 @@ const ResetPassword = () => {
         }
         try {
             const res = await fetch(
-              "http://localhost:3000/api/auth/reset_password",
+              "https://lms-9f91.vercel.app/api/auth/reset_password",
               {
                 method: "POST",
                 headers: {

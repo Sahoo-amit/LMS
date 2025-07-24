@@ -22,7 +22,7 @@ const Testimonials = () => {
   const getCourses = async () => {
     try {
       const res = await fetch(
-        "http://localhost:3000/api/courses/published_course",
+        "https://lms-9f91.vercel.app/api/courses/published_course",
         {
           method: "GET"
         }
@@ -37,7 +37,7 @@ const Testimonials = () => {
 
   const getReviews = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/courses/getReviews");
+      const res = await fetch("https://lms-9f91.vercel.app/api/courses/getReviews");
       const data = await res.json();
       setReviews(data.reviews);
     } catch (error) {
