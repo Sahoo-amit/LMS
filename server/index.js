@@ -21,9 +21,9 @@ const corsOption = {
   credentials: true,
 };
 
-app.use("/api/purchase", purchaseRouter)
 
 app.use(cors(corsOption))
+app.use("/api/purchase", purchaseRouter)
 app.use(express.json())
 
 app.use('/api/media', mediaRouter)

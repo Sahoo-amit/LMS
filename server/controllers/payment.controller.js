@@ -73,6 +73,7 @@ export const createCheckoutSession = async (req, res) => {
 
 
 export const stripeWebhook = async (req, res) => {
+  console.log("🔥 Stripe webhook triggered");
   let event;
   try {
     const payloadString = JSON.stringify(req.body, null, 2);
