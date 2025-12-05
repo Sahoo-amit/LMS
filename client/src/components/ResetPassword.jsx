@@ -13,7 +13,7 @@ const ResetPassword = () => {
     }
     try {
       const res = await fetch(
-        "https://lms-zeta-seven.vercel.app/api/auth/reset_password",
+        "https://lms-backend-z77i.onrender.com/api/auth/reset_password",
         {
           method: "POST",
           headers: {

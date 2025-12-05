@@ -26,7 +26,7 @@ const Contact = () => {
     e.preventDefault();
     try {
       const res = await fetch(
-        `https://lms-zeta-seven.vercel.app/api/contact/send_message`,
+        `https://lms-backend-z77i.onrender.com/api/contact/send_message`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

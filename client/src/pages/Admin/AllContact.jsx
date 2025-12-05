@@ -13,7 +13,7 @@ const AllContact = () => {
   const getUser = async () => {
     try {
       const res = await fetch(
-        "https://lms-zeta-seven.vercel.app/api/contact/get_contact",
+        "https://lms-backend-z77i.onrender.com/api/contact/get_contact",
         {
           method: "GET",
           headers: {
@@ -33,7 +33,7 @@ const AllContact = () => {
     if (!confirmDelete) return;
     try {
       await fetch(
-        `https://lms-zeta-seven.vercel.app/api/auth/contact/delete_message`,
+        `https://lms-backend-z77i.onrender.com/api/auth/contact/delete_message`,
         {
           method: "DELETE",
           headers: {

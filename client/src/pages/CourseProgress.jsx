@@ -13,7 +13,7 @@ const CourseProgress = () => {
   const getProgress = async () => {
     try {
       const res = await fetch(
-        `https://lms-zeta-seven.vercel.app/api/progress/${id}`,
+        `https://lms-backend-z77i.onrender.com/api/progress/${id}`,
         {
           method: "GET",
           headers: {
@@ -32,7 +32,7 @@ const CourseProgress = () => {
   const markLectureAsViewed = async (lectureId) => {
     try {
       await fetch(
-        `https://lms-zeta-seven.vercel.app/api/progress/${id}/lecture/${lectureId}`,
+        `https://lms-backend-z77i.onrender.com/api/progress/${id}/lecture/${lectureId}`,
         {
           method: "PATCH",
           headers: {
@@ -49,7 +49,7 @@ const CourseProgress = () => {
   const markCourseComplete = async () => {
     try {
       const res = await fetch(
-        `https://lms-zeta-seven.vercel.app/api/progress/${id}/complete`,
+        `https://lms-backend-z77i.onrender.com/api/progress/${id}/complete`,
         {
           method: "PATCH",
           headers: {
@@ -68,7 +68,7 @@ const CourseProgress = () => {
   const markCourseIncomplete = async () => {
     try {
       const res = await fetch(
-        `https://lms-zeta-seven.vercel.app/api/progress/${id}/incomplete`,
+        `https://lms-backend-z77i.onrender.com/api/progress/${id}/incomplete`,
         {
           method: "PATCH",
           headers: {
@@ -87,7 +87,7 @@ const CourseProgress = () => {
   const fetchUserReview = async () => {
     try {
       const res = await fetch(
-        `https://lms-zeta-seven.vercel.app/api/courses/get_course/${id}`,
+        `https://lms-backend-z77i.onrender.com/api/courses/get_course/${id}`,
         {
           method: "GET",
           headers: {

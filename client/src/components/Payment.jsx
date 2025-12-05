@@ -6,7 +6,7 @@ const Payment = ({ id }) => {
   const makePayment = async () => {
     try {
       const res = await fetch(
-        `https://lms-zeta-seven.vercel.app/api/purchase/checkout/create-checkout-session`,
+        `https://lms-backend-z77i.onrender.com/api/purchase/checkout/create-checkout-session`,
         {
           method: "POST",
           headers: {

@@ -15,7 +15,7 @@ const AllUser = () => {
   const getUser = async () => {
     try {
       const res = await fetch(
-        "https://lms-zeta-seven.vercel.app/api/auth/allUser",
+        "https://lms-backend-z77i.onrender.com/api/auth/allUser",
         {
           method: "GET",
           headers: {
@@ -38,7 +38,7 @@ const AllUser = () => {
   const updateRole = async (id) => {
     try {
       await fetch(
-        `https://lms-zeta-seven.vercel.app/api/auth/updateRole/${id}`,
+        `https://lms-backend-z77i.onrender.com/api/auth/updateRole/${id}`,
         {
           method: "PUT",
           headers: {
@@ -61,7 +61,7 @@ const AllUser = () => {
     if (!confirmDelete) return;
     try {
       await fetch(
-        `https://lms-zeta-seven.vercel.app/api/auth/deleteUser/${id}`,
+        `https://lms-backend-z77i.onrender.com/api/auth/deleteUser/${id}`,
         {
           method: "DELETE",
           headers: {

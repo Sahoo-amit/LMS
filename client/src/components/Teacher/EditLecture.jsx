@@ -37,7 +37,7 @@ const EditLecture = () => {
       setIsLoading(true);
       try {
         const res = await fetch(
-          "https://lms-zeta-seven.vercel.app/api/media/upload_video",
+          "https://lms-backend-z77i.onrender.com/api/media/upload_video",
           {
             method: "POST",
             body: formData,
@@ -76,7 +76,7 @@ const EditLecture = () => {
 
     try {
       const res = await fetch(
-        `https://lms-zeta-seven.vercel.app/api/courses/${courseId}/lecture/${lectureId}`,
+        `https://lms-backend-z77i.onrender.com/api/courses/${courseId}/lecture/${lectureId}`,
         {
           method: "POST",
           headers: {

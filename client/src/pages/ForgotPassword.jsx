@@ -25,7 +25,7 @@ const ForgotPassword = () => {
 
     try {
       const res = await fetch(
-        "https://lms-zeta-seven.vercel.app/api/auth/forgot_password",
+        "https://lms-backend-z77i.onrender.com/api/auth/forgot_password",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -55,7 +55,7 @@ const ForgotPassword = () => {
 
     try {
       const res = await fetch(
-        "https://lms-zeta-seven.vercel.app/api/auth/verify_otp",
+        "https://lms-backend-z77i.onrender.com/api/auth/verify_otp",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -89,7 +89,7 @@ const ForgotPassword = () => {
 
     try {
       const res = await fetch(
-        "https://lms-zeta-seven.vercel.app/api/auth/reset_password",
+        "https://lms-backend-z77i.onrender.com/api/auth/reset_password",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

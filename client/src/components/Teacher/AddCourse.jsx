@@ -21,7 +21,7 @@ const AddCourse = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://lms-zeta-seven.vercel.app/api/courses/createcourse`,
+        `https://lms-backend-z77i.onrender.com/api/courses/createcourse`,
         {
           method: "POST",
           headers: {

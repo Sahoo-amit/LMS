@@ -11,7 +11,7 @@ const AdminDashboard = () => {
   const getCourseData = async () => {
     try {
       const res = await fetch(
-        "https://lms-zeta-seven.vercel.app/api/courses/admin_details",
+        "https://lms-backend-z77i.onrender.com/api/courses/admin_details",
         {
           method: "GET",
           headers: {

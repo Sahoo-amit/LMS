@@ -27,7 +27,7 @@ const EditCourse = () => {
   const getCourseById = async () => {
     try {
       const res = await fetch(
-        `https://lms-zeta-seven.vercel.app/api/courses/get_course/${id}`,
+        `https://lms-backend-z77i.onrender.com/api/courses/get_course/${id}`,
         {
           method: "GET",
           headers: {
@@ -75,7 +75,7 @@ const EditCourse = () => {
       }
 
       const res = await fetch(
-        `https://lms-zeta-seven.vercel.app/api/courses/update_course/${id}`,
+        `https://lms-backend-z77i.onrender.com/api/courses/update_course/${id}`,
         {
           method: "PUT",
           headers: {
@@ -109,7 +109,7 @@ const EditCourse = () => {
 
     try {
       const response = await fetch(
-        `https://lms-zeta-seven.vercel.app/api/courses/${id}?publish=true`,
+        `https://lms-backend-z77i.onrender.com/api/courses/${id}?publish=true`,
         {
           method: "PUT",
           headers: {
