@@ -1,22 +1,22 @@
-import Stripe from 'stripe'
-import { Course } from "../models/course.model.js"
-import { CoursePurchase } from '../models/coursePurchase.model.js';
-import { Lecture } from '../models/lecture.model.js';
-import { User } from '../models/user.model.js';
-import fetch from 'node-fetch'
-const FRONTEND_URL = "https://lms-ntj1.onrender.com"
+import Stripe from "stripe";
+import { Course } from "../models/course.model.js";
+import { CoursePurchase } from "../models/coursePurchase.model.js";
+import { Lecture } from "../models/lecture.model.js";
+import { User } from "../models/user.model.js";
+import fetch from "node-fetch";
+const FRONTEND_URL = "http://localhost:8000";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-export const getMyIp = async(req, res)=>{
+export const getMyIp = async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
   res.json({ ip });
-}
+};
 
 export const createCheckoutSession = async (req, res) => {
   try {
-    console.log("Checkout request:", req.body)
-    console.log("User ID from middleware:", req.id)
+    console.log("Checkout request:", req.body);
+    console.log("User ID from middleware:", req.id);
     const userId = req.id;
     const { courseId } = req.body;
     const userIP = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
@@ -73,7 +73,6 @@ export const createCheckoutSession = async (req, res) => {
   }
 };
 
-
 export const stripeWebhook = async (req, res) => {
   console.log("🔥 Stripe webhook triggered");
   let event;
@@ -86,7 +85,6 @@ export const stripeWebhook = async (req, res) => {
       sig,
       process.env.WEBHOOK_ENDPOINT_SECRET
     );
-
   } catch (error) {
     console.error("Webhook error:", error.message);
     return res.status(400).send(`Webhook error: ${error.message}`);
@@ -105,10 +103,10 @@ export const stripeWebhook = async (req, res) => {
       }
 
       if (session.amount_total) {
-        purchase.amount = session.amount_total / 100
+        purchase.amount = session.amount_total / 100;
       }
       if (session.metadata?.userIP) {
-        purchase.purchaseIp = session.metadata.userIP
+        purchase.purchaseIp = session.metadata.userIP;
       }
       purchase.status = "completed";
       if (purchase.courseId && purchase.courseId.lectures.length > 0) {
@@ -135,22 +133,27 @@ export const stripeWebhook = async (req, res) => {
     }
   }
   res.status(200).send();
-}
+};
 
-export const getPurchasedCourse = async(req,res)=>{
+export const getPurchasedCourse = async (req, res) => {
   try {
-    const {courseId} = req.params
-    const userId = req.id
-    const course = await Course.findById(courseId).populate({path: "teacher"}).populate({path: "lectures"})
-    const purchasedCourse = await CoursePurchase.findOne({userId, courseId}).populate("status")
-    if(!course){
-      return res.status(404).json({message: "Course not found."})
+    const { courseId } = req.params;
+    const userId = req.id;
+    const course = await Course.findById(courseId)
+      .populate({ path: "teacher" })
+      .populate({ path: "lectures" });
+    const purchasedCourse = await CoursePurchase.findOne({
+      userId,
+      courseId,
+    }).populate("status");
+    if (!course) {
+      return res.status(404).json({ message: "Course not found." });
     }
-    return res.status(200).json({course, purchasedCourse: !!purchasedCourse})
+    return res.status(200).json({ course, purchasedCourse: !!purchasedCourse });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const getAllPurchasedCourse = async (req, res) => {
   try {
@@ -178,7 +181,7 @@ export const getAllPurchasedCourse = async (req, res) => {
       const courseId = course._id.toString();
       if (!seenCourses.has(courseId)) {
         seenCourses.add(courseId);
-        uniqueCourses.push(course)
+        uniqueCourses.push(course);
       }
     }
 
@@ -187,8 +190,7 @@ export const getAllPurchasedCourse = async (req, res) => {
     console.log(error);
     return res.status(500).json({ message: "Server error" });
   }
-}
-
+};
 
 export const getAllPurchasedCourseByTeacher = async (req, res) => {
   try {
@@ -201,7 +203,7 @@ export const getAllPurchasedCourseByTeacher = async (req, res) => {
     });
     const filteredCourses = purchasedCourses.filter((p) => p.courseId !== null);
     if (filteredCourses.length === 0) {
-      return res.status(200).json({ purchasedCourse: [] })
+      return res.status(200).json({ purchasedCourse: [] });
     }
     const seenCourses = new Set();
     const uniqueCourses = [];
@@ -228,7 +230,11 @@ export const getPurchasedCourseByStudentId = async (req, res) => {
     const purchasedCourses = await CoursePurchase.find({
       userId: studentId,
       status: "completed",
-    }).populate({path:"courseId", select:"-enrolledStudents", populate:{path:"teacher", select:"username email"}})
+    }).populate({
+      path: "courseId",
+      select: "-enrolledStudents",
+      populate: { path: "teacher", select: "username email" },
+    });
 
     if (!purchasedCourses || purchasedCourses.length === 0) {
       return res.status(200).json({ purchasedCourse: [] });
@@ -254,4 +260,3 @@ export const getPurchasedCourseByStudentId = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
-

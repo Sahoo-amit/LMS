@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthStore } from "../store/AuthStore"
+import { AuthStore } from "../store/AuthStore";
 
 const PlacementGuide = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = AuthStore()
+  const { isAuthenticated } = AuthStore();
 
   if (!isAuthenticated) {
     navigate("/login");
@@ -20,7 +20,7 @@ const PlacementGuide = () => {
         <ul className="list-disc pl-6 text-gray-700">
           <li>
             <a
-              href="https://roadmap.sh/frontend"
+              href="http://roadmap.sh/frontend"
               target="_blank"
               rel="noreferrer"
               className="text-blue-600 underline"
@@ -30,7 +30,7 @@ const PlacementGuide = () => {
           </li>
           <li>
             <a
-              href="https://roadmap.sh/backend"
+              href="http://roadmap.sh/backend"
               target="_blank"
               rel="noreferrer"
               className="text-blue-600 underline"
@@ -40,7 +40,7 @@ const PlacementGuide = () => {
           </li>
           <li>
             <a
-              href="https://roadmap.sh/full-stack"
+              href="http://roadmap.sh/full-stack"
               target="_blank"
               rel="noreferrer"
               className="text-blue-600 underline"
@@ -50,7 +50,7 @@ const PlacementGuide = () => {
           </li>
           <li>
             <a
-              href="https://github.com/Avik-Jain/100-Days-Of-ML-Code"
+              href="http://github.com/Avik-Jain/100-Days-Of-ML-Code"
               target="_blank"
               rel="noreferrer"
               className="text-blue-600 underline"
@@ -68,7 +68,7 @@ const PlacementGuide = () => {
           formatting.
         </p>
         <a
-          href="https://www.overleaf.com/latex/templates/software-engineer-resume/gwqzpzcrptnv"
+          href="http://www.overleaf.com/latex/templates/software-engineer-resume/gwqzpzcrptnv"
           target="_blank"
           className="text-blue-600 underline"
         >
@@ -82,7 +82,7 @@ const PlacementGuide = () => {
         <ul className="list-disc pl-6 text-gray-700">
           <li>
             <a
-              href="https://interviewing.io/"
+              href="http://interviewing.io/"
               target="_blank"
               rel="noreferrer"
               className="text-blue-600 underline"
@@ -92,7 +92,7 @@ const PlacementGuide = () => {
           </li>
           <li>
             <a
-              href="https://pramp.com/"
+              href="http://pramp.com/"
               target="_blank"
               rel="noreferrer"
               className="text-blue-600 underline"
@@ -102,7 +102,7 @@ const PlacementGuide = () => {
           </li>
           <li>
             <a
-              href="https://www.youtube.com/results?search_query=mock+interviews"
+              href="http://www.youtube.com/results?search_query=mock+interviews"
               target="_blank"
               className="text-blue-600 underline"
             >

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import { ThemeStore } from "../store/ThemeStore";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
@@ -26,7 +26,7 @@ const Contact = () => {
     e.preventDefault();
     try {
       const res = await fetch(
-        `https://lms-backend-z77i.onrender.com/api/contact/send_message`,
+        `http://localhost:3000/api/contact/send_message`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -39,7 +39,6 @@ const Contact = () => {
       console.log(error);
     }
   };
-
 
   return (
     <motion.div

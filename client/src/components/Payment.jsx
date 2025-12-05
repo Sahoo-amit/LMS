@@ -1,12 +1,12 @@
-import React from 'react'
-import {AuthStore} from '../store/AuthStore'
+import React from "react";
+import { AuthStore } from "../store/AuthStore";
 
-const Payment = ({id}) => {
-  const token = AuthStore((state)=>state.token)
-  const makePayment = async()=>{
+const Payment = ({ id }) => {
+  const token = AuthStore((state) => state.token);
+  const makePayment = async () => {
     try {
       const res = await fetch(
-        `https://lms-backend-z77i.onrender.com/api/purchase/checkout/create-checkout-session`,
+        `http://localhost:3000/api/purchase/checkout/create-checkout-session`,
         {
           method: "POST",
           headers: {
@@ -16,22 +16,25 @@ const Payment = ({id}) => {
           body: JSON.stringify({ courseId: id }),
         }
       );
-      const data = await res.json()
-      if(data.url){
-        window.location.href = data.url
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
       }
-      console.log(data)
+      console.log(data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   return (
     <div>
-      <button onClick={makePayment} className="bg-gray-600 w-full hover:bg-gray-700 rounded-sm text-white cursor-pointer px-3 py-1">
+      <button
+        onClick={makePayment}
+        className="bg-gray-600 w-full hover:bg-gray-700 rounded-sm text-white cursor-pointer px-3 py-1"
+      >
         Purchase course
       </button>
     </div>
   );
-}
+};
 
-export default Payment
+export default Payment;

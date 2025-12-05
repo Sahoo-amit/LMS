@@ -16,7 +16,7 @@ const CourseList = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        "https://lms-backend-z77i.onrender.com/api/courses/published_course",
+        "http://localhost:3000/api/courses/published_course",
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -92,7 +92,18 @@ const CourseList = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredCourses.map(
-              ({ _id, title, image, price, category, description, averageRating }, index) => (
+              (
+                {
+                  _id,
+                  title,
+                  image,
+                  price,
+                  category,
+                  description,
+                  averageRating,
+                },
+                index
+              ) => (
                 <div
                   key={index}
                   className={`rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:scale-105 ${

@@ -28,7 +28,7 @@ const Lectures = () => {
   const getLecture = async () => {
     try {
       const res = await fetch(
-        `https://lms-backend-z77i.onrender.com/api/courses/lectures/${id}`,
+        `http://localhost:3000/api/courses/lectures/${id}`,
         {
           method: "GET",
           headers: {
@@ -47,7 +47,7 @@ const Lectures = () => {
   const removeLecture = async (lectureId) => {
     try {
       const res = await fetch(
-        `https://lms-backend-z77i.onrender.com/api/courses/lecture/${lectureId}`,
+        `http://localhost:3000/api/courses/lecture/${lectureId}`,
         {
           method: "DELETE",
           headers: {
@@ -69,7 +69,7 @@ const Lectures = () => {
     setIsLoading(true);
     try {
       const res = await fetch(
-        `https://lms-backend-z77i.onrender.com/api/courses/${id}/lecture`,
+        `http://localhost:3000/api/courses/${id}/lecture`,
         {
           method: "POST",
           headers: {

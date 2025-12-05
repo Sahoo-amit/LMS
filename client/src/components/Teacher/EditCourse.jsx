@@ -6,14 +6,14 @@ import { ThemeStore } from "../../store/ThemeStore";
 
 const EditCourse = () => {
   const token = AuthStore((state) => state.token);
-  const theme = ThemeStore((state)=>state.theme)
+  const theme = ThemeStore((state) => state.theme);
   const { id } = useParams();
   const location = useLocation();
-  const { title, category } = location.state || {}
-  const [isLoading, setIsLoading] = useState(false)
-  const [isPublished, setIsPublished] = useState(false)
-  const [isLecturAdded, setIsLectureAdded] = useState(false)
-  
+  const { title, category } = location.state || {};
+  const [isLoading, setIsLoading] = useState(false);
+  const [isPublished, setIsPublished] = useState(false);
+  const [isLecturAdded, setIsLectureAdded] = useState(false);
+
   const [form, setForm] = useState({
     title: title || "",
     subtitle: "",
@@ -24,10 +24,10 @@ const EditCourse = () => {
     image: null,
   });
 
-  const getCourseById = async()=>{
+  const getCourseById = async () => {
     try {
       const res = await fetch(
-        `https://lms-backend-z77i.onrender.com/api/courses/get_course/${id}`,
+        `http://localhost:3000/api/courses/get_course/${id}`,
         {
           method: "GET",
           headers: {
@@ -35,14 +35,14 @@ const EditCourse = () => {
           },
         }
       );
-      const data = await res.json()
-      console.log(data)
-      setIsLectureAdded(data.course.lectures.length)
-      setIsPublished(data.course.isPublished)
+      const data = await res.json();
+      console.log(data);
+      setIsLectureAdded(data.course.lectures.length);
+      setIsPublished(data.course.isPublished);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
@@ -61,7 +61,7 @@ const EditCourse = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const formData = new FormData();
       formData.append("title", form.title);
@@ -90,7 +90,7 @@ const EditCourse = () => {
       } else {
         alert(data.message || "Failed to update course.");
       }
-      setIsLoading(false)
+      setIsLoading(false);
     } catch (error) {
       console.error("Update error:", error);
       alert("An error occurred while updating the course.");
@@ -131,10 +131,9 @@ const EditCourse = () => {
     }
   };
 
-
-  useEffect(()=>{
-    getCourseById()
-  },[])
+  useEffect(() => {
+    getCourseById();
+  }, []);
 
   return (
     <div className="py-20 min-h-screen w-full">

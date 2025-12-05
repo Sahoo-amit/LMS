@@ -6,12 +6,12 @@ import { ThemeStore } from "../../store/ThemeStore";
 const AdminDashboard = () => {
   const [courses, setCourses] = useState([]);
   const token = AuthStore((state) => state.token);
-  const theme = ThemeStore((state) => state.theme)
+  const theme = ThemeStore((state) => state.theme);
 
   const getCourseData = async () => {
     try {
       const res = await fetch(
-        "https://lms-backend-z77i.onrender.com/api/courses/admin_details",
+        "http://localhost:3000/api/courses/admin_details",
         {
           method: "GET",
           headers: {

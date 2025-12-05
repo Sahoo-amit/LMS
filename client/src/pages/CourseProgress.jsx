@@ -4,15 +4,15 @@ import { AuthStore } from "../store/AuthStore";
 import Review from "../components/Review";
 
 const CourseProgress = () => {
-  const [course, setCourse] = useState(null)
-  const [currentLecture, setCurrentLecture] = useState(null)
-  const [userReview, setUserReview] = useState(null)
+  const [course, setCourse] = useState(null);
+  const [currentLecture, setCurrentLecture] = useState(null);
+  const [userReview, setUserReview] = useState(null);
   const { id } = useParams();
   const token = AuthStore((state) => state.token);
 
   const getProgress = async () => {
     try {
-      const res = await fetch(`https://lms-backend-z77i.onrender.com/api/progress/${id}`, {
+      const res = await fetch(`http://localhost:3000/api/progress/${id}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -20,7 +20,7 @@ const CourseProgress = () => {
       });
       const data = await res.json();
       setCourse(data.data);
-      console.log(data.data)
+      console.log(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -29,7 +29,7 @@ const CourseProgress = () => {
   const markLectureAsViewed = async (lectureId) => {
     try {
       await fetch(
-        `https://lms-backend-z77i.onrender.com/api/progress/${id}/lecture/${lectureId}`,
+        `http://localhost:3000/api/progress/${id}/lecture/${lectureId}`,
         {
           method: "PATCH",
           headers: {
@@ -46,7 +46,7 @@ const CourseProgress = () => {
   const markCourseComplete = async () => {
     try {
       const res = await fetch(
-        `https://lms-backend-z77i.onrender.com/api/progress/${id}/complete`,
+        `http://localhost:3000/api/progress/${id}/complete`,
         {
           method: "PATCH",
           headers: {
@@ -65,7 +65,7 @@ const CourseProgress = () => {
   const markCourseIncomplete = async () => {
     try {
       const res = await fetch(
-        `https://lms-backend-z77i.onrender.com/api/progress/${id}/incomplete`,
+        `http://localhost:3000/api/progress/${id}/incomplete`,
         {
           method: "PATCH",
           headers: {
@@ -83,12 +83,15 @@ const CourseProgress = () => {
 
   const fetchUserReview = async () => {
     try {
-      const res = await fetch(`https://lms-backend-z77i.onrender.com/api/courses/get_course/${id}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await fetch(
+        `http://localhost:3000/api/courses/get_course/${id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const data = await res.json();
 
       const userId = data?.currentUserId;
@@ -102,8 +105,8 @@ const CourseProgress = () => {
   };
 
   useEffect(() => {
-    getProgress()
-    fetchUserReview()
+    getProgress();
+    fetchUserReview();
   }, []);
 
   if (!course) return <p className="text-center mt-20">Loading...</p>;

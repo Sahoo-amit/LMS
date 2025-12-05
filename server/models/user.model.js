@@ -8,9 +8,16 @@ const userSchema = mongoose.Schema(
     password: { type: String, require: true },
     resetOTP: { type: String, default: 0 },
     resetOTPExpire: { type: Number, default: 0 },
-    role: { type: String, enum: ["student", "teacher", "admin"], default: "student" },
-    enrolledCourse : [{type: mongoose.Schema.Types.ObjectId, ref:"Course"}],
-    photoUrl : {type: String, default: "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
+    role: {
+      type: String,
+      enum: ["student", "teacher", "admin"],
+      default: "student",
+    },
+    enrolledCourse: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
+    photoUrl: {
+      type: String,
+      default: "http://cdn-icons-png.flaticon.com/512/149/149071.png",
+    },
   },
   { timestamps: true }
 );
@@ -27,8 +34,8 @@ userSchema.methods.generateToken = async function () {
       { expiresIn: "2h" }
     );
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
-export const User = mongoose.model("User",userSchema)
+export const User = mongoose.model("User", userSchema);

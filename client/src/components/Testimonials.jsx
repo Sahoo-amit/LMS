@@ -13,7 +13,7 @@ const fadeInOut = {
 const Testimonials = () => {
   const [reviews, setReviews] = useState([]);
   const [courses, setCourses] = useState([]);
-  const { isAuthenticated } = AuthStore();
+  const { isAuthenticated } = AuthStore()
   const { theme } = ThemeStore();
   const isDark = theme === "dark";
   const navigate = useNavigate();
@@ -22,9 +22,9 @@ const Testimonials = () => {
   const getCourses = async () => {
     try {
       const res = await fetch(
-        "https://lms-backend-z77i.onrender.com/api/courses/published_course",
+        "http://localhost:3000/api/courses/published_course",
         {
-          method: "GET"
+          method: "GET",
         }
       );
       const data = await res.json();
@@ -37,7 +37,7 @@ const Testimonials = () => {
 
   const getReviews = async () => {
     try {
-      const res = await fetch("https://lms-backend-z77i.onrender.com/api/courses/getReviews");
+      const res = await fetch("http://localhost:3000/api/courses/getReviews");
       const data = await res.json();
       setReviews(data.reviews);
     } catch (error) {
@@ -71,7 +71,7 @@ const Testimonials = () => {
         transition={{ duration: 0.6 }}
       >
         Featured Courses
-      </motion.h2> 
+      </motion.h2>
       <motion.div
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6"
         variants={fadeInOut}
@@ -110,7 +110,7 @@ const Testimonials = () => {
             </motion.div>
           );
         })}
-      </motion.div> 
+      </motion.div>
       <motion.div
         className="flex justify-center mt-6"
         variants={fadeInOut}
@@ -122,7 +122,7 @@ const Testimonials = () => {
         >
           Show All
         </button>
-      </motion.div> 
+      </motion.div>
       <motion.h2
         className="text-xl sm:text-2xl font-semibold text-center mt-12 mb-6"
         variants={fadeInOut}

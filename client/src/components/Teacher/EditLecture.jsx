@@ -37,7 +37,7 @@ const EditLecture = () => {
       setIsLoading(true);
       try {
         const res = await fetch(
-          "https://lms-backend-z77i.onrender.com/api/media/upload_video",
+          "http://localhost:3000/api/media/upload_video",
           {
             method: "POST",
             body: formData,
@@ -187,7 +187,7 @@ const EditLecture = () => {
               disabled={isUploading || isLoading}
               className={`bg-blue-500 text-white px-4 py-2 rounded-lg ${
                 theme === "dark" ? "hover:bg-blue-400" : "hover:bg-blue-600"
-              } ${isUploading ? "cursor-not-allowed":""}`}
+              } ${isUploading ? "cursor-not-allowed" : ""}`}
             >
               {isUploading || isLoading ? "Please wait..." : "Upload lecture"}
             </button>

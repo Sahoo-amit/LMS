@@ -11,7 +11,7 @@ const Review = ({ id, userReview }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (rating === 0) {
-      setMessage("Please provide a rating before submitting.")
+      setMessage("Please provide a rating before submitting.");
       return;
     }
 
@@ -21,8 +21,8 @@ const Review = ({ id, userReview }) => {
     try {
       const method = userReview ? "PUT" : "POST";
       const endpoint = userReview
-        ? `https://lms-backend-z77i.onrender.com/api/courses/${id}/review/update`
-        : `https://lms-backend-z77i.onrender.com/api/courses/${id}/review`;
+        ? `http://localhost:3000/api/courses/${id}/review/update`
+        : `http://localhost:3000/api/courses/${id}/review`;
 
       const res = await fetch(endpoint, {
         method,
