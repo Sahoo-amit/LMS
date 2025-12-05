@@ -9,7 +9,7 @@ import progressRouter from "./routes/progress.route.js";
 import contactRouter from "./routes/contact.route.js";
 import cors from "cors";
 
-const FRONTEND_URL = "http://localhost:8000";
+const FRONTEND_URL = "https://lms-k3za.vercel.app";
 
 config();
 

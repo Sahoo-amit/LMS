@@ -4,7 +4,7 @@ import { CoursePurchase } from "../models/coursePurchase.model.js";
 import { Lecture } from "../models/lecture.model.js";
 import { User } from "../models/user.model.js";
 import fetch from "node-fetch";
-const FRONTEND_URL = "http://localhost:8000";
+const FRONTEND_URL = "https://lms-k3za.vercel.app";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
