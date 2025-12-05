@@ -14,12 +14,15 @@ const AllUser = () => {
 
   const getUser = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/auth/allUser", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await fetch(
+        "https://lms-zeta-seven.vercel.app/api/auth/allUser",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const data = await res.json();
       setUsers(data);
       const roles = {};
@@ -34,14 +37,17 @@ const AllUser = () => {
 
   const updateRole = async (id) => {
     try {
-      await fetch(`http://localhost:3000/api/auth/updateRole/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ newRole: roleSelections[id] }),
-      });
+      await fetch(
+        `https://lms-zeta-seven.vercel.app/api/auth/updateRole/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ newRole: roleSelections[id] }),
+        }
+      );
       toast.success("Role updated successfully.");
       setEditableRow(null);
       getUser();
@@ -54,12 +60,15 @@ const AllUser = () => {
     const confirmDelete = window.confirm("Are you sure to remove this user?");
     if (!confirmDelete) return;
     try {
-      await fetch(`http://localhost:3000/api/auth/deleteUser/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await fetch(
+        `https://lms-zeta-seven.vercel.app/api/auth/deleteUser/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       toast.success("User deleted successfully.");
       getUser();
     } catch (error) {

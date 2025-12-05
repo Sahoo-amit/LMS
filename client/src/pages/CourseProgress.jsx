@@ -12,12 +12,15 @@ const CourseProgress = () => {
 
   const getProgress = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/progress/${id}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await fetch(
+        `https://lms-zeta-seven.vercel.app/api/progress/${id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const data = await res.json();
       setCourse(data.data);
       console.log(data.data);
@@ -29,7 +32,7 @@ const CourseProgress = () => {
   const markLectureAsViewed = async (lectureId) => {
     try {
       await fetch(
-        `http://localhost:3000/api/progress/${id}/lecture/${lectureId}`,
+        `https://lms-zeta-seven.vercel.app/api/progress/${id}/lecture/${lectureId}`,
         {
           method: "PATCH",
           headers: {
@@ -46,7 +49,7 @@ const CourseProgress = () => {
   const markCourseComplete = async () => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/progress/${id}/complete`,
+        `https://lms-zeta-seven.vercel.app/api/progress/${id}/complete`,
         {
           method: "PATCH",
           headers: {
@@ -65,7 +68,7 @@ const CourseProgress = () => {
   const markCourseIncomplete = async () => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/progress/${id}/incomplete`,
+        `https://lms-zeta-seven.vercel.app/api/progress/${id}/incomplete`,
         {
           method: "PATCH",
           headers: {
@@ -84,7 +87,7 @@ const CourseProgress = () => {
   const fetchUserReview = async () => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/courses/get_course/${id}`,
+        `https://lms-zeta-seven.vercel.app/api/courses/get_course/${id}`,
         {
           method: "GET",
           headers: {

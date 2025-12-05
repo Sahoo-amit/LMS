@@ -20,7 +20,7 @@ const CourseDetails = () => {
   const getCourseDetails = async () => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/courses/get_course/${id}`,
+        `https://lms-zeta-seven.vercel.app/api/courses/get_course/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -39,7 +39,7 @@ const CourseDetails = () => {
   const getPurchasedCourse = async () => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/purchase/course/${id}/get_course`,
+        `https://lms-zeta-seven.vercel.app/api/purchase/course/${id}/get_course`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

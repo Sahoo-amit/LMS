@@ -31,7 +31,7 @@ const MyCourse = () => {
     setIsLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:3000/api/courses/courseby_teacher`,
+        `https://lms-zeta-seven.vercel.app/api/courses/courseby_teacher`,
         {
           method: "GET",
           headers: {
@@ -55,13 +55,16 @@ const MyCourse = () => {
     if (!confirmDelete) return;
 
     try {
-      await fetch(`http://localhost:3000/api/courses/delete_course/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await fetch(
+        `https://lms-zeta-seven.vercel.app/api/courses/delete_course/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       toast.success("Course deleted successfully");
       getCourse();
     } catch (error) {

@@ -15,7 +15,9 @@ const MyEnrollments = () => {
   const navigate = useNavigate();
 
   const getIp = async () => {
-    const res = await fetch("http://localhost:3000/api/purchase/my-ip");
+    const res = await fetch(
+      "https://lms-zeta-seven.vercel.app/api/purchase/my-ip"
+    );
     const data = await res.json();
     setCurrentIp(data.ip);
   };
@@ -24,7 +26,7 @@ const MyEnrollments = () => {
     setIsLoading(true);
     try {
       const res = await fetch(
-        "http://localhost:3000/api/purchase/purchasedCourse",
+        "https://lms-zeta-seven.vercel.app/api/purchase/purchasedCourse",
         {
           method: "GET",
           headers: {

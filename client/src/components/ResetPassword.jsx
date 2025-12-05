@@ -12,13 +12,16 @@ const ResetPassword = () => {
       return toast.error("Passwords don't match.");
     }
     try {
-      const res = await fetch("http://localhost:3000/api/auth/reset_password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ newPassword, confirmPassword }),
-      });
+      const res = await fetch(
+        "https://lms-zeta-seven.vercel.app/api/auth/reset_password",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ newPassword, confirmPassword }),
+        }
+      );
       const data = await res.json;
       console.log(data);
       setTimeout(() => navigate("/signin"), 2000);
