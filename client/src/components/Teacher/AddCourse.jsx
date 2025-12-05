@@ -21,7 +21,7 @@ const AddCourse = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://lms-9f91.vercel.app/api/courses/createcourse`,
+        `http://localhost:3000/api/courses/createcourse`,
         {
           method: "POST",
           headers: {

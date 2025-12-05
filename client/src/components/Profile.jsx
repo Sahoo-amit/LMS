@@ -19,7 +19,7 @@ const Profile = () => {
   const getData = async () => {
     try {
       const res = await fetch(
-        `https://lms-9f91.vercel.app/api/auth/getProfile/${userId}`,
+        `http://localhost:3000/api/auth/getProfile/${userId}`,
         {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
@@ -53,7 +53,7 @@ const Profile = () => {
       if (newData.photoUrl) formData.append("profileUrl", newData.photoUrl);
 
       const res = await fetch(
-        `https://lms-9f91.vercel.app/api/auth/update_profile/${userId}`,
+        `http://localhost:3000/api/auth/update_profile/${userId}`,
         {
           method: "PUT",
           headers: { Authorization: `Bearer ${token}` },

@@ -27,7 +27,7 @@ const EditCourse = () => {
   const getCourseById = async () => {
     try {
       const res = await fetch(
-        `https://lms-9f91.vercel.app/api/courses/get_course/${id}`,
+        `http://localhost:3000/api/courses/get_course/${id}`,
         {
           method: "GET",
           headers: {
@@ -75,7 +75,7 @@ const EditCourse = () => {
       }
 
       const res = await fetch(
-        `https://lms-9f91.vercel.app/api/courses/update_course/${id}`,
+        `http://localhost:3000/api/courses/update_course/${id}`,
         {
           method: "PUT",
           headers: {
@@ -109,7 +109,7 @@ const EditCourse = () => {
 
     try {
       const response = await fetch(
-        `https://lms-9f91.vercel.app/api/courses/${id}?publish=true`,
+        `http://localhost:3000/api/courses/${id}?publish=true`,
         {
           method: "PUT",
           headers: {
