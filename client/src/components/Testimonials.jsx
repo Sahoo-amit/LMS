@@ -13,7 +13,7 @@ const fadeInOut = {
 const Testimonials = () => {
   const [reviews, setReviews] = useState([]);
   const [courses, setCourses] = useState([]);
-  const { isAuthenticated } = AuthStore()
+  const { isAuthenticated } = AuthStore();
   const { theme } = ThemeStore();
   const isDark = theme === "dark";
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const Testimonials = () => {
   const getCourses = async () => {
     try {
       const res = await fetch(
-        "http://localhost:3000/api/courses/published_course",
+        "https://lms-9f91.vercel.app/api/courses/published_course",
         {
           method: "GET",
         }
@@ -37,7 +37,9 @@ const Testimonials = () => {
 
   const getReviews = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/courses/getReviews");
+      const res = await fetch(
+        "https://lms-9f91.vercel.app/api/courses/getReviews"
+      );
       const data = await res.json();
       setReviews(data.reviews);
     } catch (error) {

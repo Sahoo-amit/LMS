@@ -37,7 +37,7 @@ const EditLecture = () => {
       setIsLoading(true);
       try {
         const res = await fetch(
-          "http://localhost:3000/api/media/upload_video",
+          "https://lms-9f91.vercel.app/api/media/upload_video",
           {
             method: "POST",
             body: formData,
@@ -76,7 +76,7 @@ const EditLecture = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/api/courses/${courseId}/lecture/${lectureId}`,
+        `https://lms-9f91.vercel.app/api/courses/${courseId}/lecture/${lectureId}`,
         {
           method: "POST",
           headers: {
