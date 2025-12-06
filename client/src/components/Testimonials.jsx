@@ -52,7 +52,7 @@ const Testimonials = () => {
   }, []);
 
   const handleClick = () => {
-    navigate("/courses");
+    navigate(isAuthenticated ? "/courses":"/signin");
   };
 
   return (
