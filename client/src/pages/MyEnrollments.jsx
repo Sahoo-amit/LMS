@@ -8,8 +8,7 @@ import toast from "react-hot-toast";
 const MyEnrollments = () => {
   const [myCourses, setMyCourses] = useState([]);
   const token = AuthStore((state) => state.token);
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentIp, setCurrentIp] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
   const { theme } = ThemeStore();
   const isDark = theme === "dark";
   const navigate = useNavigate();
@@ -19,7 +18,6 @@ const MyEnrollments = () => {
       "https://lms-backend-z77i.onrender.com/api/purchase/my-ip"
     );
     const data = await res.json();
-    setCurrentIp(data.ip);
   };
 
   const getCourse = async () => {
@@ -44,11 +42,7 @@ const MyEnrollments = () => {
   };
 
   const handleClick = (item) => {
-    if (item.purchaseIP === currentIp) {
       navigate(`/course_progress/${item.courseId._id}`);
-    } else {
-      toast.error("Access denied. Invalid IP address.");
-    }
   };
 
   useEffect(() => {
