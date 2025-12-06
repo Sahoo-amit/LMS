@@ -1,6 +1,6 @@
 import express from 'express'
 import { auth, authTeacher, authAdmin } from '../middlewares/auth.middleware.js'
-import { createCheckoutSession, stripeWebhook, getPurchasedCourse, getAllPurchasedCourse, getAllPurchasedCourseByTeacher, getPurchasedCourseByStudentId, getMyIp } from '../controllers/payment.controller.js'
+import { createCheckoutSession, stripeWebhook, getPurchasedCourse, getAllPurchasedCourse, getAllPurchasedCourseByTeacher, getPurchasedCourseByStudentId } from '../controllers/payment.controller.js'
 
 const router = express.Router()
 
