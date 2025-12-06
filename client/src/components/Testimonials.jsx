@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthStore } from "../store/AuthStore";
 import { ThemeStore } from "../store/ThemeStore";
 import { motion } from "framer-motion";
