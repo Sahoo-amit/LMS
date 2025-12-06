@@ -13,13 +13,6 @@ const MyEnrollments = () => {
   const isDark = theme === "dark";
   const navigate = useNavigate();
 
-  const getIp = async () => {
-    const res = await fetch(
-      "https://lms-backend-z77i.onrender.com/api/purchase/my-ip"
-    );
-    const data = await res.json();
-  };
-
   const getCourse = async () => {
     setIsLoading(true);
     try {
@@ -47,7 +40,6 @@ const MyEnrollments = () => {
 
   useEffect(() => {
     getCourse();
-    getIp();
   }, []);
 
   return (
