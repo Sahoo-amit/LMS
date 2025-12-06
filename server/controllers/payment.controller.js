@@ -43,7 +43,7 @@ export const createCheckoutSession = async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `${FRONTEND_URL}/my_enrollment`,
+      success_url: `${FRONTEND_URL}/my_enrollment?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${FRONTEND_URL}/course_details`,
       metadata: {
         courseId: courseId.toString(),
@@ -66,64 +66,58 @@ export const createCheckoutSession = async (req, res) => {
 };
 
 export const stripeWebhook = async (req, res) => {
-  console.log("🔥 Stripe webhook triggered");
   let event;
-  try {
-    const payloadString = JSON.stringify(req.body, null, 2);
-    const secret = process.env.WEBHOOK_ENDPOINT_SECRET;
-    const sig = req.headers["stripe-signature"];
-    event = stripe.webhooks.constructEvent(
-      req.body,
-      sig,
-      process.env.WEBHOOK_ENDPOINT_SECRET
-    );
-  } catch (error) {
-    console.error("Webhook error:", error.message);
-    return res.status(400).send(`Webhook error: ${error.message}`);
-  }
-  if (event.type === "checkout.session.completed") {
-    console.log("check session complete is called");
-    try {
-      const session = event.data.object;
 
+  try {
+    const sig = req.headers["stripe-signature"];
+    const secret = process.env.WEBHOOK_ENDPOINT_SECRET;
+
+    event = stripe.webhooks.constructEvent(req.body, sig, secret);
+  } catch (error) {
+    console.error("❌ Webhook signature verification failed:", error.message);
+    return res.status(400).send(`Webhook Error: ${error.message}`);
+  }
+
+  // Handle successful payment
+  if (event.type === "checkout.session.completed") {
+    const session = event.data.object;
+
+    try {
       const purchase = await CoursePurchase.findOne({
         paymentId: session.id,
-      }).populate({ path: "courseId" });
+      }).populate("courseId");
 
       if (!purchase) {
-        return res.status(404).json({ message: "Purchase not found" });
+        console.log("❌ Purchase not found for session:", session.id);
+        return res.status(400).json({ message: "Purchase not found" });
       }
 
-      if (session.amount_total) {
-        purchase.amount = session.amount_total / 100;
-      }
-      
+      // Update purchase
       purchase.status = "completed";
-      if (purchase.courseId && purchase.courseId.lectures.length > 0) {
-        await Lecture.updateMany(
-          { _id: { $in: purchase.courseId.lectures } },
-          { $set: { isPreviewFree: true } }
-        );
-      }
-      await purchase.save();
-      await User.findByIdAndUpdate(
-        purchase.userId,
-        { $addToSet: { enrolledCourse: purchase.courseId._id } },
-        { new: true }
-      );
+      purchase.amount = session.amount_total / 100;
 
-      await Course.findByIdAndUpdate(
-        purchase.courseId._id,
-        { $addToSet: { enrolledStudents: purchase.userId } },
-        { new: true }
-      );
+      await purchase.save();
+
+      // Add course to user's enrolled list
+      await User.findByIdAndUpdate(purchase.userId, {
+        $addToSet: { enrolledCourse: purchase.courseId._id },
+      });
+
+      // Add user to course's enrolled list
+      await Course.findByIdAndUpdate(purchase.courseId._id, {
+        $addToSet: { enrolledStudents: purchase.userId },
+      });
+
+      console.log("✅ Purchase completed for:", purchase.userId);
     } catch (error) {
-      console.error("Error handling event:", error);
-      return res.status(500).json({ message: "Internal Server Error" });
+      console.error("❌ Error processing session:", error);
+      return res.status(500).json({ message: "Server Error" });
     }
   }
+
   res.status(200).send();
 };
+
 
 export const getPurchasedCourse = async (req, res) => {
   try {
