@@ -8,6 +8,7 @@ import purchaseRouter from "./routes/purchase.route.js";
 import progressRouter from "./routes/progress.route.js";
 import contactRouter from "./routes/contact.route.js";
 import cors from "cors";
+import { stripeWebhook } from "./controllers/payment.controller.js";
 
 const FRONTEND_URL = "https://lms-ntj1.onrender.com";
 
@@ -21,6 +22,9 @@ const corsOption = {
   credentials: true,
 };
 app.use(cors(corsOption));
+app.post("/webhook", express.raw({ type: "application/json" }), stripeWebhook)
+
+
 app.use(express.json());
 
 app.use("/api/media", mediaRouter);
