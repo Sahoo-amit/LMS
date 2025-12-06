@@ -12,7 +12,6 @@ const CourseDetails = () => {
   const navigate = useNavigate();
   const token = AuthStore((state) => state.token);
   const isDark = ThemeStore((state) => state.isDark);
-  const { isAuthenticated } = AuthStore();
 
   const [course, setCourse] = useState(null);
   const [isPurchased, setIsPurchased] = useState(false);
@@ -175,7 +174,7 @@ const CourseDetails = () => {
               </span>
             </p>
             <div className="mt-4">
-              {isAuthenticated ? (isPurchased ? (
+              {isPurchased ? (
                 <button
                   onClick={handleProgress}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition"
@@ -184,7 +183,7 @@ const CourseDetails = () => {
                 </button>
               ) : (
                 <Payment id={id} />
-              )):'/signin'}
+              )}
             </div>
           </div>
         </div>
