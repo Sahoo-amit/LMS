@@ -53,7 +53,7 @@ const Testimonials = () => {
   }, []);
 
   const handleClick = () => {
-    navigate(isAuthenticated ? "/courses" : "/signin");
+    navigate("/courses");
   };
 
   return (
@@ -80,7 +80,7 @@ const Testimonials = () => {
         transition={{ duration: 0.6 }}
       >
         {viewCourses.map((item, index) => {
-          const { image, title, description, averageRating, price } = item;
+          const { _id,image, title, description, averageRating, price } = item;
           return (
             <motion.div
               key={index}
@@ -97,7 +97,9 @@ const Testimonials = () => {
                 alt="course"
                 className="w-full h-40 object-cover rounded-md mb-3"
               />
-              <h3 className="text-lg sm:text-xl font-semibold">{title}</h3>
+              <Link to={`/courses/${_id}`}>
+                <h3 className="text-lg sm:text-xl font-semibold">{title}</h3>
+              </Link>
               <p className="mt-2 font-semibold">Price: Rs.{price}</p>
               <p className="text-yellow-500 font-semibold"></p>
               <p className="my-1 font-semibold text-sm">
